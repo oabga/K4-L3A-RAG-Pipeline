@@ -7,7 +7,8 @@ Hướng dẫn:
     3. Lưu file gốc vào data/landing/legal/.
     4. Đặt tên không dấu và thể hiện đúng nội dung.
 
-Ví dụ tài liệu: học phí, học bổng, ký túc xá, quy trình đăng ký.
+Corpus nhóm: văn bản pháp luật công khai (Nghị định/Thông tư/Luật).
+Nguồn đã gộp: baovq (DOCX) và hoang-minh (PDF).
 Nếu website chặn crawler, hãy chọn nguồn công khai khác; không vượt WAF.
 """
 

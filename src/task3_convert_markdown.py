@@ -44,23 +44,27 @@ def convert_legal_docs() -> None:
 
 
 def convert_news_articles() -> None:
-    # TODO: Convert JSON vào standardized/news.
-    #
-    # import json
-    # news_dir = LANDING_DIR / "news"
-    # output_dir = OUTPUT_DIR / "news"
-    # output_dir.mkdir(parents=True, exist_ok=True)
-    # for path in news_dir.glob("*.json"):
-    #     data = json.loads(path.read_text(encoding="utf-8"))
-    #     header = (
-    #         f"# {data['title']}\n\n"
-    #         f"**Source:** {data['url']}\n\n"
-    #         f"**Crawled:** {data['date_crawled']}\n\n---\n\n"
-    #     )
-    #     (output_dir / f"{path.stem}.md").write_text(
-    #         header + data["content_markdown"], encoding="utf-8"
-    #     )
-    raise NotImplementedError("Implement convert_news_articles")
+    """Convert JSON trong landing/news sang standardized/news."""
+    import json
+
+    news_dir = LANDING_DIR / "news"
+    output_dir = OUTPUT_DIR / "news"
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    for path in sorted(news_dir.glob("*.json")):
+        data = json.loads(path.read_text(encoding="utf-8"))
+        body = str(data.get("content_markdown", "")).strip()
+        if len(body) < MIN_MARKDOWN_CHARS:
+            print(f"SKIP {path.name}: only {len(body)} chars")
+            continue
+        header = (
+            f"# {data['title']}\n\n"
+            f"**Source:** {data['url']}\n\n"
+            f"**Crawled:** {data['date_crawled']}\n\n---\n\n"
+        )
+        text = header + body + "\n"
+        (output_dir / f"{path.stem}.md").write_text(text, encoding="utf-8")
+        print(f"OK   {path.name} -> {path.stem}.md ({len(text)} chars)")
 
 
 def convert_all() -> None:
