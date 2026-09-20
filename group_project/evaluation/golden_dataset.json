@@ -1,0 +1,77 @@
+[
+  {
+    "question": "Nghị định 349/2026/NĐ-CP được ban hành ngày nào và sửa đổi văn bản nào?",
+    "expected_answer": "Nghị định số 349/2026/NĐ-CP được ban hành tại Hà Nội ngày 09 tháng 9 năm 2026, sửa đổi, bổ sung một số điều của các nghị định quy định chi tiết và biện pháp thi hành Luật Đấu thầu về lựa chọn nhà thầu, trong đó Chương I sửa đổi Nghị định số 214/2025/NĐ-CP.",
+    "expected_context": "Số: 349/2026/NĐ-CP Hà Nội, ngày 09 tháng 9 năm 2026 NGHỊ ĐỊNH SỬA ĐỔI, BỔ SUNG MỘT SỐ ĐIỀU CỦA CÁC NGHỊ ĐỊNH QUY ĐỊNH CHI TIẾT MỘT SỐ ĐIỀU VÀ BIỆN PHÁP THI HÀNH LUẬT ĐẤU THẦU VỀ LỰA CHỌN NHÀ THẦU"
+  },
+  {
+    "question": "Theo Nghị định 349/2026/NĐ-CP, thời hạn gửi báo giá trên Hệ thống mạng đấu thầu quốc gia đối với hàng hóa, dịch vụ thông thường là bao lâu?",
+    "expected_answer": "Đơn vị quan tâm phải gửi báo giá trên Hệ thống mạng đấu thầu quốc gia trong thời hạn tối thiểu 03 ngày làm việc kể từ ngày đăng tải yêu cầu báo giá. Chủ đầu tư phải đăng tải yêu cầu báo giá trên Hệ thống và tối thiểu lấy 01 báo giá, khuyến khích nhiều hơn 01 báo giá.",
+    "expected_context": "Chủ đầu tư phải đăng tải yêu cầu báo giá trên Hệ thống mạng đấu thầu quốc gia, đơn vị quan tâm phải gửi báo giá trên Hệ thống mạng đấu thầu quốc gia trong thời hạn tối thiểu 03 ngày làm việc kể từ ngày đăng tải yêu cầu báo giá."
+  },
+  {
+    "question": "Gói thầu mua thuốc, hóa chất, vật tư xét nghiệm, thiết bị y tế phải lấy báo giá trong thời hạn tối thiểu bao lâu theo Nghị định 349/2026/NĐ-CP?",
+    "expected_answer": "Đơn vị quan tâm gửi báo giá trong thời hạn tối thiểu 10 ngày kể từ ngày đăng tải yêu cầu báo giá trên Hệ thống mạng đấu thầu quốc gia. Nếu có từ 02 báo giá trở lên, chủ đầu tư được lựa chọn báo giá cao nhất phù hợp với khả năng tài chính và yêu cầu chuyên môn.",
+    "expected_context": "đơn vị quan tâm gửi báo giá trong thời hạn tối thiểu 10 ngày kể từ ngày đăng tải yêu cầu báo giá trên Hệ thống mạng đấu thầu quốc gia. Trường hợp có từ 02 báo giá trở lên, chủ đầu tư được lựa chọn báo giá cao nhất phù hợp với khả năng tài chính và yêu cầu chuyên môn."
+  },
+  {
+    "question": "Gói thầu hoặc nội dung mua sắm có giá không quá 100 triệu đồng được xử lý thế nào theo Nghị định 349/2026/NĐ-CP?",
+    "expected_answer": "Thủ trưởng cơ quan, đơn vị mua sắm tự quyết định việc mua sắm bảo đảm tiết kiệm, hiệu quả và tự chịu trách nhiệm; không phải đáp ứng điều kiện tại khoản 2 Điều 79 và không phải thực hiện quy trình khoản 3, nhưng phải có hóa đơn, chứng từ đầy đủ, hoặc được thực hiện theo quy trình chỉ định thầu rút gọn.",
+    "expected_context": "Đối với gói thầu hoặc nội dung mua sắm có giá không quá 100 triệu đồng, Thủ trưởng cơ quan, đơn vị mua sắm chịu trách nhiệm quyết định việc mua sắm bảo đảm tiết kiệm, hiệu quả và tự chịu trách nhiệm về quyết định của mình, không phải đáp ứng điều kiện quy định tại khoản 2 Điều 79 của Nghị định này, không phải thực hiện quy trình quy định tại khoản 3 Điều này nhưng phải bảo đảm chế độ hóa đơn, chứng từ đầy đủ theo quy định của pháp luật hoặc được thực hiện theo quy trình chỉ định thầu rút gọn quy định tại khoản 3 Điều này."
+  },
+  {
+    "question": "Nghị định 349/2026/NĐ-CP có hiệu lực thi hành khi nào?",
+    "expected_answer": "Nghị định có hiệu lực thi hành kể từ ngày ký ban hành, tức ngày 09 tháng 9 năm 2026.",
+    "expected_context": "Điều 28. Điều khoản thi hành 1. Nghị định này có hiệu lực thi hành kể từ ngày ký ban hành."
+  },
+  {
+    "question": "Luật Công nghệ cao 2025 có số hiệu và ngày ban hành nào?",
+    "expected_answer": "Luật số 133/2025/QH15, ban hành tại Hà Nội ngày 10 tháng 12 năm 2025.",
+    "expected_context": "Luật số: 133/2025/QH15 Hà Nội, ngày 10 tháng 12 năm 2025 LUẬT CÔNG NGHỆ CAO"
+  },
+  {
+    "question": "Công nghệ cao được định nghĩa như thế nào trong Luật số 133/2025/QH15?",
+    "expected_answer": "Công nghệ cao là công nghệ có hàm lượng cao về nghiên cứu khoa học và phát triển công nghệ, tích hợp các thành tựu khoa học tiên tiến, có tính đột phá, tạo ra sản phẩm, dịch vụ có chất lượng vượt trội, giá trị gia tăng cao, thân thiện với môi trường.",
+    "expected_context": "Công nghệ cao là công nghệ có hàm lượng cao về nghiên cứu khoa học và phát triển công nghệ, tích hợp các thành tựu khoa học tiên tiến, có tính đột phá, tạo ra sản phẩm, dịch vụ có chất lượng vượt trội, giá trị gia tăng cao, thân thiện với môi trường."
+  },
+  {
+    "question": "Công nghệ chiến lược khác công nghệ cao ở điểm nào theo Luật 133/2025/QH15?",
+    "expected_answer": "Công nghệ chiến lược là công nghệ có tính đột phá và lan tỏa, được Nhà nước xác định tập trung đầu tư phát triển nhằm tăng cường năng lực tự chủ công nghệ, tạo lợi thế cạnh tranh quốc gia, bảo đảm quốc phòng, an ninh và thúc đẩy phát triển kinh tế - xã hội bền vững.",
+    "expected_context": "Công nghệ chiến lược là công nghệ có tính đột phá và lan tỏa, được Nhà nước xác định tập trung đầu tư phát triển nhằm tăng cường năng lực tự chủ công nghệ, tạo lợi thế cạnh tranh quốc gia, bảo đảm quốc phòng, an ninh và thúc đẩy phát triển kinh tế - xã hội bền vững."
+  },
+  {
+    "question": "Luật Công nghệ cao 2025 có hiệu lực thi hành từ ngày nào?",
+    "expected_answer": "Luật có hiệu lực thi hành từ ngày 01 tháng 7 năm 2026.",
+    "expected_context": "1. Luật này có hiệu lực thi hành từ ngày 01 tháng 7 năm 2026."
+  },
+  {
+    "question": "Nhà nước áp dụng chính sách ưu đãi như thế nào đối với hoạt động công nghệ cao và công nghệ chiến lược theo Điều 4 Luật 133/2025/QH15?",
+    "expected_answer": "Nhà nước xác định phát triển công nghệ cao, công nghệ chiến lược là đột phá chiến lược và áp dụng các mức ưu đãi cao nhất theo quy định của pháp luật về đầu tư, thuế, đất đai và các chính sách có liên quan.",
+    "expected_context": "Nhà nước xác định phát triển công nghệ cao, công nghệ chiến lược là đột phá chiến lược để phát triển nhanh, bền vững kinh tế - xã hội, bảo đảm quốc phòng, an ninh và nâng cao năng lực tự chủ công nghệ quốc gia; áp dụng các mức ưu đãi cao nhất theo quy định của pháp luật về đầu tư, thuế, đất đai và các chính sách có liên quan đối với hoạt động công nghệ cao, công nghệ chiến lược."
+  },
+  {
+    "question": "Thông tư 34/2026/TT-BYT hướng dẫn chương trình mục tiêu quốc gia nào và giai đoạn nào?",
+    "expected_answer": "Thông tư hướng dẫn Chương trình mục tiêu quốc gia về chăm sóc sức khỏe, dân số và phát triển giai đoạn 2026-2035, giai đoạn I từ năm 2026 đến năm 2030, thuộc phạm vi quản lý nhà nước của Bộ Y tế.",
+    "expected_context": "THÔNG TƯ HƯỚNG DẪN MỘT SỐ NỘI DUNG THỰC HIỆN CHƯƠNG TRÌNH MỤC TIÊU QUỐC GIA VỀ CHĂM SÓC SỨC KHỎE, DÂN SỐ VÀ PHÁT TRIỂN GIAI ĐOẠN 2026-2035, GIAI ĐOẠN I: TỪ NĂM 2026 ĐẾN NĂM 2030 THUỘC PHẠM VI QUẢN LÝ NHÀ NƯỚC CỦA BỘ Y TẾ"
+  },
+  {
+    "question": "Thông tư 34/2026/TT-BYT có hiệu lực thi hành ngày nào?",
+    "expected_answer": "Thông tư có hiệu lực thi hành kể từ ngày 08 tháng 9 năm 2026.",
+    "expected_context": "Điều 4. Hiệu lực thi hành 1. Thông tư này có hiệu lực thi hành kể từ ngày 08 tháng 9 năm 2026."
+  },
+  {
+    "question": "Việc thực hiện Chương trình theo Thông tư 34/2026/TT-BYT phải bảo đảm nguyên tắc gì về trùng lặp nguồn lực?",
+    "expected_answer": "Phải bảo đảm không trùng lặp với các chương trình mục tiêu quốc gia khác và các hoạt động thuộc nhiệm vụ quản lý nhà nước đã được bố trí đầy đủ từ kinh phí chi thường xuyên hằng năm; khuyến khích huy động sự tham gia của tổ chức, gia đình, cá nhân.",
+    "expected_context": "Bảo đảm không trùng lặp với các chương trình mục tiêu quốc gia khác, các hoạt động thuộc nhiệm vụ quản lý nhà nước đã được bố trí đầy đủ từ kinh phí chi thường xuyên hằng năm; khuyến khích, huy động sự tham gia, đóng góp của tổ chức, gia đình, cá nhân trong công tác chăm sóc sức khỏe, dân số và phát triển."
+  },
+  {
+    "question": "Công an TP.Hồ Chí Minh nói gì về việc cắt giảm thủ tục hành chính trong lĩnh vực PCCC và CNCH?",
+    "expected_answer": "Việc cắt giảm, đơn giản hóa thủ tục hành chính không đồng nghĩa với việc giảm các yêu cầu bảo đảm an toàn. Phương thức quản lý mới đề cao tính chủ động và trách nhiệm của chủ đầu tư, người đứng đầu cơ sở, đồng thời tăng cường hậu kiểm.",
+    "expected_context": "Phòng Cảnh sát PCCC & CNCH – Công an Thành phố cho biết, việc cắt giảm, đơn giản hóa thủ tục hành chính trong lĩnh vực PCCC & CNCH không đồng nghĩa với việc giảm các yêu cầu bảo đảm an toàn. Theo Phòng Cảnh sát PCCC & CNCH, phương thức quản lý mới đề cao tính chủ động và trách nhiệm của chủ đầu tư, người đứng đầu cơ sở."
+  },
+  {
+    "question": "Mục tiêu GRDP của TP.Hồ Chí Minh giai đoạn 2026-2030 theo dự thảo Chương trình hành động triển khai Nghị quyết Trung ương 3 là gì?",
+    "expected_answer": "Giai đoạn 2026-2030, Thành phố đặt mục tiêu tăng trưởng GRDP tối thiểu 11%/năm; GRDP bình quân đầu người từ 14.500 đô la Mỹ; kinh tế số chiếm khoảng 40% GRDP; hoàn thành khoảng 255 km đường sắt đô thị.",
+    "expected_context": "Theo dự thảo, TP.Hồ Chí Minh đặt mục tiêu giai đoạn 2026 - 2030 đạt tốc độ tăng trưởng GRDP tối thiểu 11%/năm; GRDP bình quân đầu người từ 14.500 đô la Mỹ; kinh tế số chiếm khoảng 40% GRDP; hoàn thành khoảng 255 km đường sắt đô thị; cơ bản giải quyết tình trạng ngập úng, ô nhiễm môi trường, ùn tắc giao thông và không còn ma túy."
+  }
+]

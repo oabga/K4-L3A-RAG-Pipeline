@@ -1,0 +1,1440 @@
+{
+  "top_k": 5,
+  "fallback": "disabled (score_threshold=0)",
+  "A": {
+    "overall": {
+      "faithfulness": 1.0,
+      "answer_relevance": 0.1859,
+      "context_recall": 0.4387,
+      "context_precision": 0.7374,
+      "average": 0.5905,
+      "latency_s_mean": 0.0061
+    }
+  },
+  "B": {
+    "overall": {
+      "faithfulness": 1.0,
+      "answer_relevance": 0.5818,
+      "context_recall": 0.7875,
+      "context_precision": 0.8066,
+      "average": 0.794,
+      "latency_s_mean": 0.0319
+    }
+  },
+  "delta_B_minus_A": {
+    "faithfulness": 0.0,
+    "answer_relevance": 0.3959,
+    "context_recall": 0.3488,
+    "context_precision": 0.0692,
+    "average": 0.2035,
+    "latency_s_mean": 0.0258
+  },
+  "cases": [
+    {
+      "index": 0,
+      "question": "Nghị định 349/2026/NĐ-CP được ban hành ngày nào và sửa đổi văn bản nào?",
+      "in_corpus": true,
+      "A": {
+        "faithfulness": 1.0,
+        "answer_relevance": 0.232,
+        "context_recall": 0.4516,
+        "context_precision": 0.6792,
+        "average": 0.5907
+      },
+      "B": {
+        "faithfulness": 1.0,
+        "answer_relevance": 0.7301,
+        "context_recall": 0.871,
+        "context_precision": 0.6792,
+        "average": 0.8201
+      },
+      "worse_config": "A",
+      "failure_stage": "generation",
+      "root_cause": "context ổn (recall=0.45) nhưng answer relevance=0.23, faithfulness=1.00",
+      "sources_A": [
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "dense",
+          "score": 0.138
+        },
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "dense",
+          "score": 0.1191
+        },
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "dense",
+          "score": 0.1142
+        },
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "dense",
+          "score": 0.1141
+        },
+        {
+          "source": "luat-cong-nghe-cao-2025-so-133-2025-qh15.md",
+          "method": "dense",
+          "score": 0.1119
+        }
+      ],
+      "sources_B": [
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "hybrid",
+          "score": 0.0164
+        },
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "hybrid",
+          "score": 0.0164
+        },
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "hybrid",
+          "score": 0.0161
+        },
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "hybrid",
+          "score": 0.0161
+        },
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "hybrid",
+          "score": 0.0159
+        }
+      ],
+      "answer_A": "Trong thời hạn 30 ngày kể từ ngày bắt đầu thực hiện gói thầu, các bên phải hoàn thiện thủ tục chỉ định thầu quy định tại khoản 3 Điều này. [Source: nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md]\n\nTrường hợp pháp luật có liên quan quy định nhà thầu tham dự thầu, thực hiện hợp đồng phải độc lập với các tổ chức, cá nhân khác thì phải tuân thủ quy định đó. [Source: nghi-dinh-349-2026-nd-cp-lua-chon-nh",
+      "answer_B": "Nghị định 349/2026/NĐ-CP sửa đổi các Nghị định hướng dẫn Luật Đấu thầu lựa chọn nhà thầu mới nhất Nguồn: https://thuvienphapluat.vn/van-ban/Dau-tu/Nghi-dinh-349-2026-ND-CP-sua -doi-cac-Nghi-dinh-huong-dan-Luat-Dau-thau-lua-chon-nha-thau-710002.as px MỤC LỤC VĂN BẢN CHÍNH PHỦ ------- CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM Độc lập - Tự do - Hạnh phúc --------------- Số: 349/2026/NĐ-CP Hà Nội, ngày 09 th"
+    },
+    {
+      "index": 1,
+      "question": "Theo Nghị định 349/2026/NĐ-CP, thời hạn gửi báo giá trên Hệ thống mạng đấu thầu quốc gia đối với hàng hóa, dịch vụ thông thường là bao lâu?",
+      "in_corpus": true,
+      "A": {
+        "faithfulness": 1.0,
+        "answer_relevance": 0.2515,
+        "context_recall": 0.5312,
+        "context_precision": 1.0,
+        "average": 0.6957
+      },
+      "B": {
+        "faithfulness": 1.0,
+        "answer_relevance": 0.7502,
+        "context_recall": 1.0,
+        "context_precision": 1.0,
+        "average": 0.9375
+      },
+      "worse_config": "A",
+      "failure_stage": "generation",
+      "root_cause": "context ổn (recall=0.53) nhưng answer relevance=0.25, faithfulness=1.00",
+      "sources_A": [
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "dense",
+          "score": 0.1273
+        },
+        {
+          "source": "luat-cong-nghe-cao-2025-so-133-2025-qh15.md",
+          "method": "dense",
+          "score": 0.1143
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "dense",
+          "score": 0.1094
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "dense",
+          "score": 0.1094
+        },
+        {
+          "source": "luat-cong-nghe-cao-2025-so-133-2025-qh15.md",
+          "method": "dense",
+          "score": 0.1054
+        }
+      ],
+      "sources_B": [
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "hybrid",
+          "score": 0.0164
+        },
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "hybrid",
+          "score": 0.0164
+        },
+        {
+          "source": "luat-cong-nghe-cao-2025-so-133-2025-qh15.md",
+          "method": "hybrid",
+          "score": 0.0161
+        },
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "hybrid",
+          "score": 0.0161
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "hybrid",
+          "score": 0.0159
+        }
+      ],
+      "answer_A": "Tổ chức tập huấn cho người làm công tác bảo vệ trẻ em cấp xã, cha mẹ, người chăm sóc trẻ về hỗ trợ tâm lý xã hội cho trẻ em; Tổng hợp, báo cáo Bộ Y tế (Cục Bà mẹ và Trẻ em) kết quả thực hiện hàng năm. [Source: thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md]\n\nCông nghệ chiến lược là công nghệ có tính đột phá và lan tỏa, được Nhà nước xác định tập trung đầu tư phát triển nhằm tăng cường năng lự",
+      "answer_B": "Chủ đầu tư phải đăng tải yêu cầu báo giá trên Hệ thống mạng đấu thầu quốc gia, đơn vị quan tâm phải gửi báo giá trên Hệ thống mạng đấu thầu quốc gia trong thời hạn tối thiểu 03 ngày làm việc kể từ ngày đăng tải yêu cầu báo giá. [Source: nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md]\n\nThông tin của nhà thầu gửi đơn kiến nghị, thời điểm gửi đơn kiến nghị được Hệ thống mạng đấu thầu quốc gia công kha"
+    },
+    {
+      "index": 2,
+      "question": "Gói thầu mua thuốc, hóa chất, vật tư xét nghiệm, thiết bị y tế phải lấy báo giá trong thời hạn tối thiểu bao lâu theo Nghị định 349/2026/NĐ-CP?",
+      "in_corpus": true,
+      "A": {
+        "faithfulness": 1.0,
+        "answer_relevance": 0.1864,
+        "context_recall": 0.5111,
+        "context_precision": 1.0,
+        "average": 0.6744
+      },
+      "B": {
+        "faithfulness": 1.0,
+        "answer_relevance": 0.5441,
+        "context_recall": 0.7333,
+        "context_precision": 1.0,
+        "average": 0.8194
+      },
+      "worse_config": "A",
+      "failure_stage": "generation",
+      "root_cause": "context ổn (recall=0.51) nhưng answer relevance=0.19, faithfulness=1.00",
+      "sources_A": [
+        {
+          "source": "luat-cong-nghe-cao-2025-so-133-2025-qh15.md",
+          "method": "dense",
+          "score": 0.1155
+        },
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "dense",
+          "score": 0.1018
+        },
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "dense",
+          "score": 0.1017
+        },
+        {
+          "source": "article_01.md",
+          "method": "dense",
+          "score": 0.0905
+        },
+        {
+          "source": "article_01.md",
+          "method": "dense",
+          "score": 0.0885
+        }
+      ],
+      "sources_B": [
+        {
+          "source": "luat-cong-nghe-cao-2025-so-133-2025-qh15.md",
+          "method": "hybrid",
+          "score": 0.0164
+        },
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "hybrid",
+          "score": 0.0164
+        },
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "hybrid",
+          "score": 0.0161
+        },
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "hybrid",
+          "score": 0.0161
+        },
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "hybrid",
+          "score": 0.0159
+        }
+      ],
+      "answer_A": "Chủ đầu tư phải chịu trách nhiệm về kết quả nghiệm thu Đối với chủ đầu tư, công tác nghiệm thu về PCCC phải được thực hiện thực chất, đầy đủ và đúng quy định. [Source: article_01.md]\n\nCông trình phải được thi công đúng thiết kế đã được thẩm định; các vật liệu, thiết bị đầu vào phải được kiểm tra theo yêu cầu. [Source: article_01.md]\n\nNgược lại, chủ đầu tư cần chủ động kiểm soát ngay từ quá trình t",
+      "answer_B": "Sửa đổi, bổ sung điểm b khoản 4 như sau:“b) Gia hạn thời điểm đóng thầu tối thiểu là 05 ngày làm việc đối với gói thầu đang thực hiện mời quan tâm, mời sơ tuyển, gói thầu xây lắp, hỗn hợp có giá gói thầu không quá 20 tỷ đồng, gói thầu mua sắm hàng hóa, dịch vụ phi tư vấn có giá gói thầu không quá 10 tỷ đồng, gói thầu tư vấn đơn giản, gói thầu tư vấn cấp bách cần thực hiện ngay do yêu cầu về tiến đ"
+    },
+    {
+      "index": 3,
+      "question": "Gói thầu hoặc nội dung mua sắm có giá không quá 100 triệu đồng được xử lý thế nào theo Nghị định 349/2026/NĐ-CP?",
+      "in_corpus": true,
+      "A": {
+        "faithfulness": 1.0,
+        "answer_relevance": 0.1496,
+        "context_recall": 0.5517,
+        "context_precision": 0.4778,
+        "average": 0.5448
+      },
+      "B": {
+        "faithfulness": 1.0,
+        "answer_relevance": 0.1606,
+        "context_recall": 0.8621,
+        "context_precision": 0.5333,
+        "average": 0.639
+      },
+      "worse_config": "A",
+      "failure_stage": "generation",
+      "root_cause": "context ổn (recall=0.55) nhưng answer relevance=0.15, faithfulness=1.00",
+      "sources_A": [
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "dense",
+          "score": 0.116
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "dense",
+          "score": 0.1109
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "dense",
+          "score": 0.1059
+        },
+        {
+          "source": "article_01.md",
+          "method": "dense",
+          "score": 0.1029
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "dense",
+          "score": 0.0934
+        }
+      ],
+      "sources_B": [
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "hybrid",
+          "score": 0.0164
+        },
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "hybrid",
+          "score": 0.0164
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "hybrid",
+          "score": 0.0161
+        },
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "hybrid",
+          "score": 0.0161
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "hybrid",
+          "score": 0.0159
+        }
+      ],
+      "answer_A": "Nội dung 03: Đánh giá miễn dịch cộng đồng đối với các bệnh ưu tiên có vắc xin phòng (sởi, bạch hầu, ho gà) để chủ động đề xuất các chiến dịch tiêm chủng chủ động phòng chống dịch [Source: thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md]\n\nUBND cấp tỉnh Bộ Y tế (Cục Phòng bệnh) 21 Tỷ lệ người nhiễm HIV trong cộng đồng biết tình trạng nhiễm HIV % [Source: thong-tu-34-2026-tt-byt-cham-soc-suc-kho",
+      "answer_B": "Gói thầu thuộc dự toán mua sắm không hình thành dự án có giá gói thầu không quá 01 tỷ đồng; gói thầu dịch vụ tư vấn thuộc dự án có giá gói thầu không quá 03 tỷ đồng, gói thầu dịch vụ phi tư vấn, hàng hóa, xây lắp, hỗn hợp thuộc dự án có giá gói thầu không quá 05 tỷ đồng.”. [Source: nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md]\n\nUBND cấp tỉnh Bộ Y tế (Cục Phòng bệnh) 21 Tỷ lệ người nhiễm HIV trong"
+    },
+    {
+      "index": 4,
+      "question": "Nghị định 349/2026/NĐ-CP có hiệu lực thi hành khi nào?",
+      "in_corpus": true,
+      "A": {
+        "faithfulness": 1.0,
+        "answer_relevance": 0.0739,
+        "context_recall": 0.4615,
+        "context_precision": 1.0,
+        "average": 0.6339
+      },
+      "B": {
+        "faithfulness": 1.0,
+        "answer_relevance": 0.5097,
+        "context_recall": 0.7692,
+        "context_precision": 1.0,
+        "average": 0.8197
+      },
+      "worse_config": "A",
+      "failure_stage": "generation",
+      "root_cause": "context ổn (recall=0.46) nhưng answer relevance=0.07, faithfulness=1.00",
+      "sources_A": [
+        {
+          "source": "luat-cong-nghe-cao-2025-so-133-2025-qh15.md",
+          "method": "dense",
+          "score": 0.1711
+        },
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "dense",
+          "score": 0.1694
+        },
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "dense",
+          "score": 0.1683
+        },
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "dense",
+          "score": 0.166
+        },
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "dense",
+          "score": 0.1651
+        }
+      ],
+      "sources_B": [
+        {
+          "source": "luat-cong-nghe-cao-2025-so-133-2025-qh15.md",
+          "method": "hybrid",
+          "score": 0.0164
+        },
+        {
+          "source": "luat-cong-nghe-cao-2025-so-133-2025-qh15.md",
+          "method": "hybrid",
+          "score": 0.0164
+        },
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "hybrid",
+          "score": 0.0161
+        },
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "hybrid",
+          "score": 0.0161
+        },
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "hybrid",
+          "score": 0.0159
+        }
+      ],
+      "answer_A": "Trường hợp pháp luật có liên quan quy định nhà thầu tham dự thầu, thực hiện hợp đồng phải độc lập với các tổ chức, cá nhân khác thì phải tuân thủ quy định đó. [Source: nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md]",
+      "answer_B": "Luật này có hiệu lực thi hành từ ngày 01 tháng 7 năm 2026. [Source: luat-cong-nghe-cao-2025-so-133-2025-qh15.md]"
+    },
+    {
+      "index": 5,
+      "question": "Luật Công nghệ cao 2025 có số hiệu và ngày ban hành nào?",
+      "in_corpus": true,
+      "A": {
+        "faithfulness": 1.0,
+        "answer_relevance": 0.2491,
+        "context_recall": 0.4,
+        "context_precision": 0.8042,
+        "average": 0.6133
+      },
+      "B": {
+        "faithfulness": 1.0,
+        "answer_relevance": 0.5721,
+        "context_recall": 0.7333,
+        "context_precision": 0.8875,
+        "average": 0.7982
+      },
+      "worse_config": "A",
+      "failure_stage": "retrieval",
+      "root_cause": "context recall=0.40, precision=0.80: đoạn vàng có trong corpus nhưng top-5 không đưa đủ evidence",
+      "sources_A": [
+        {
+          "source": "luat-cong-nghe-cao-2025-so-133-2025-qh15.md",
+          "method": "dense",
+          "score": 0.1523
+        },
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "dense",
+          "score": 0.1427
+        },
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "dense",
+          "score": 0.1359
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "dense",
+          "score": 0.1355
+        },
+        {
+          "source": "luat-cong-nghe-cao-2025-so-133-2025-qh15.md",
+          "method": "dense",
+          "score": 0.1335
+        }
+      ],
+      "sources_B": [
+        {
+          "source": "luat-cong-nghe-cao-2025-so-133-2025-qh15.md",
+          "method": "hybrid",
+          "score": 0.0164
+        },
+        {
+          "source": "luat-cong-nghe-cao-2025-so-133-2025-qh15.md",
+          "method": "hybrid",
+          "score": 0.0164
+        },
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "hybrid",
+          "score": 0.0161
+        },
+        {
+          "source": "luat-cong-nghe-cao-2025-so-133-2025-qh15.md",
+          "method": "hybrid",
+          "score": 0.0161
+        },
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "hybrid",
+          "score": 0.0159
+        }
+      ],
+      "answer_A": "Tổ chức, cá nhân thực hiện các hoạt động quy định tại khoản 1 Điều này được hưởng các chính sách ưu đãi, hỗ trợ quy định tại khoản 3 Điều 11 của Luật này và các chính sách ưu đãi, hỗ trợ sau đây: [Source: luat-cong-nghe-cao-2025-so-133-2025-qh15.md]\n\n, hiệu quả hoặc tiến độ thực hiện gói thầu, dự án;c) Trường hợp phát hiện dấu hiệu vi phạm pháp luật về đấu thầu, cơ quan giám sát thường xuyên yêu c",
+      "answer_B": "Luật Công nghệ cao số 21/2008/QH12 được sửa đổi, bổ sung một số điều theo Luật số 32/2013/QH13, Luật số 67/2014/QH13, Luật số 71/2025/QH15 và Luật số 93/2025/QH15 (sau đây gọi là Luật Công nghệ cao số 21/2008/QH12) hết hiệu lực kể từ ngày Luật này có hiệu lực thi hành, trừ trường hợp quy định tại khoản 1, khoản 2, điểm a và điểm c khoản 3, khoản 4 Điều 27 của Luật này. [Source: luat-cong-nghe-cao-"
+    },
+    {
+      "index": 6,
+      "question": "Công nghệ cao được định nghĩa như thế nào trong Luật số 133/2025/QH15?",
+      "in_corpus": true,
+      "A": {
+        "faithfulness": 1.0,
+        "answer_relevance": 0.1007,
+        "context_recall": 0.4324,
+        "context_precision": 1.0,
+        "average": 0.6333
+      },
+      "B": {
+        "faithfulness": 1.0,
+        "answer_relevance": 0.3446,
+        "context_recall": 0.3514,
+        "context_precision": 0.8042,
+        "average": 0.625
+      },
+      "worse_config": "B",
+      "failure_stage": "retrieval",
+      "root_cause": "context recall=0.35, precision=0.80: đoạn vàng có trong corpus nhưng top-5 không đưa đủ evidence",
+      "sources_A": [
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "dense",
+          "score": 0.123
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "dense",
+          "score": 0.0978
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "dense",
+          "score": 0.0878
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "dense",
+          "score": 0.0766
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "dense",
+          "score": 0.0683
+        }
+      ],
+      "sources_B": [
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "hybrid",
+          "score": 0.0164
+        },
+        {
+          "source": "luat-cong-nghe-cao-2025-so-133-2025-qh15.md",
+          "method": "hybrid",
+          "score": 0.0164
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "hybrid",
+          "score": 0.0161
+        },
+        {
+          "source": "luat-cong-nghe-cao-2025-so-133-2025-qh15.md",
+          "method": "hybrid",
+          "score": 0.0161
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "hybrid",
+          "score": 0.0159
+        }
+      ],
+      "answer_A": "UBND cấp tỉnh Bộ Y tế (Cục Bảo trợ xã hội)Bảo vệ, chăm sóc phát triển cho trẻ em có hoàn cảnh đặc biệt; trẻ em là nạn nhân, bị ảnh hưởng bởi thiên tai, thảm họa, trẻ em bị xâm hại cần được hỗ trợ khẩn cấp 51 Số lượng lao động trẻ em, trẻ em có nguy cơ trở thành lao động trẻ em được hỗ trợ, can thiệp Người Khái niệm: Chỉ số này cho biết tổng số lao động trẻ em, trẻ em có nguy cơ trở thành lao động ",
+      "answer_B": "Luật Công nghệ cao 2025 số 133/2025/QH15 Nguồn: https://thuvienphapluat.vn/van-ban/Linh-vuc-khac/Luat-Cong-nghe-cao-20 25-so-133-2025-QH15-675211.aspx MỤC LỤC VĂN BẢN QUỐC HỘI ------- CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM Độc lập - Tự do - Hạnh phúc --------------- Luật số: 133/2025/QH15 Hà Nội, ngày 10 tháng 12 năm 2025 LUẬT CÔNG NGHỆ CAO Căn cứ Hiến pháp nước Cộng hòa xã hội chủ nghĩa Việt Nam đã đ"
+    },
+    {
+      "index": 7,
+      "question": "Công nghệ chiến lược khác công nghệ cao ở điểm nào theo Luật 133/2025/QH15?",
+      "in_corpus": true,
+      "A": {
+        "faithfulness": 1.0,
+        "answer_relevance": 0.025,
+        "context_recall": 0.3261,
+        "context_precision": 0.45,
+        "average": 0.4503
+      },
+      "B": {
+        "faithfulness": 1.0,
+        "answer_relevance": 0.2663,
+        "context_recall": 0.3478,
+        "context_precision": 0.6389,
+        "average": 0.5633
+      },
+      "worse_config": "A",
+      "failure_stage": "retrieval",
+      "root_cause": "context recall=0.33, precision=0.45: đoạn vàng có trong corpus nhưng top-5 không đưa đủ evidence",
+      "sources_A": [
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "dense",
+          "score": 0.0543
+        },
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "dense",
+          "score": 0.0525
+        },
+        {
+          "source": "luat-cong-nghe-cao-2025-so-133-2025-qh15.md",
+          "method": "dense",
+          "score": 0.0501
+        },
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "dense",
+          "score": 0.0492
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "dense",
+          "score": 0.0478
+        }
+      ],
+      "sources_B": [
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "hybrid",
+          "score": 0.0164
+        },
+        {
+          "source": "luat-cong-nghe-cao-2025-so-133-2025-qh15.md",
+          "method": "hybrid",
+          "score": 0.0164
+        },
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "hybrid",
+          "score": 0.0161
+        },
+        {
+          "source": "luat-cong-nghe-cao-2025-so-133-2025-qh15.md",
+          "method": "hybrid",
+          "score": 0.0161
+        },
+        {
+          "source": "luat-cong-nghe-cao-2025-so-133-2025-qh15.md",
+          "method": "hybrid",
+          "score": 0.0159
+        }
+      ],
+      "answer_A": "Sửa đổi, bổ sung một số điểm, khoản của Điều 80 1. [Source: nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md]\n\nBãi bỏ cụm từ “, cơ quan thuộc Chính phủ” tại điểm k khoản 4 Điều 84; khoản 1 Điều 89; điểm a khoản 1 và khoản 2 Điều 122; điểm a khoản 2 Điều 128; điểm a khoản 1 và điểm c khoản 2 Điều 139; khoản 4 Điều 146. [Source: nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md]",
+      "answer_B": ") Sửa đổi, bổ sung điểm i khoản 1 Điều 10 như sau:“i) Sản phẩm công nghệ chiến lược thuộc Danh mục sản phẩm công nghệ chiến lược và sản phẩm công nghệ cao thuộc Danh mục sản phẩm công nghệ cao được khuyến khích phát triển được sản xuất bởi doanh nghiệp công nghệ chiến lược, doanh nghiệp công nghệ cao, doanh nghiệp sản xuất sản phẩm công nghệ cao theo pháp luật về công nghệ cao; sản phẩm, hàng hóa "
+    },
+    {
+      "index": 8,
+      "question": "Luật Công nghệ cao 2025 có hiệu lực thi hành từ ngày nào?",
+      "in_corpus": true,
+      "A": {
+        "faithfulness": 1.0,
+        "answer_relevance": 0.1791,
+        "context_recall": 0.6,
+        "context_precision": 1.0,
+        "average": 0.6948
+      },
+      "B": {
+        "faithfulness": 1.0,
+        "answer_relevance": 0.6927,
+        "context_recall": 1.0,
+        "context_precision": 1.0,
+        "average": 0.9232
+      },
+      "worse_config": "A",
+      "failure_stage": "generation",
+      "root_cause": "context ổn (recall=0.60) nhưng answer relevance=0.18, faithfulness=1.00",
+      "sources_A": [
+        {
+          "source": "luat-cong-nghe-cao-2025-so-133-2025-qh15.md",
+          "method": "dense",
+          "score": 0.156
+        },
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "dense",
+          "score": 0.1534
+        },
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "dense",
+          "score": 0.1497
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "dense",
+          "score": 0.1494
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "dense",
+          "score": 0.1475
+        }
+      ],
+      "sources_B": [
+        {
+          "source": "luat-cong-nghe-cao-2025-so-133-2025-qh15.md",
+          "method": "hybrid",
+          "score": 0.0164
+        },
+        {
+          "source": "luat-cong-nghe-cao-2025-so-133-2025-qh15.md",
+          "method": "hybrid",
+          "score": 0.0164
+        },
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "hybrid",
+          "score": 0.0161
+        },
+        {
+          "source": "luat-cong-nghe-cao-2025-so-133-2025-qh15.md",
+          "method": "hybrid",
+          "score": 0.0161
+        },
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "hybrid",
+          "score": 0.0159
+        }
+      ],
+      "answer_A": "Chính phủ quy định chi tiết Điều này; quy định về mở rộng, điều chỉnh, đầu tư xây dựng khu nông nghiệp ứng dụng công nghệ cao; hoạt động tại khu nông nghiệp ứng dụng công nghệ cao, tiêu chí đối với dự án đầu tư thực hiện hoạt động công nghệ cao trong khu nông nghiệp ứng dụng công nghệ cao; cơ chế, chính sách và quản lý nhà nước đối với khu nông nghiệp ứng dụng công nghệ cao. [Source: luat-cong-ngh",
+      "answer_B": "Luật Công nghệ cao số 21/2008/QH12 được sửa đổi, bổ sung một số điều theo Luật số 32/2013/QH13, Luật số 67/2014/QH13, Luật số 71/2025/QH15 và Luật số 93/2025/QH15 (sau đây gọi là Luật Công nghệ cao số 21/2008/QH12) hết hiệu lực kể từ ngày Luật này có hiệu lực thi hành, trừ trường hợp quy định tại khoản 1, khoản 2, điểm a và điểm c khoản 3, khoản 4 Điều 27 của Luật này. [Source: luat-cong-nghe-cao-"
+    },
+    {
+      "index": 9,
+      "question": "Nhà nước áp dụng chính sách ưu đãi như thế nào đối với hoạt động công nghệ cao và công nghệ chiến lược theo Điều 4 Luật 133/2025/QH15?",
+      "in_corpus": true,
+      "A": {
+        "faithfulness": 1.0,
+        "answer_relevance": 0.1877,
+        "context_recall": 0.4528,
+        "context_precision": 1.0,
+        "average": 0.6601
+      },
+      "B": {
+        "faithfulness": 1.0,
+        "answer_relevance": 0.9217,
+        "context_recall": 1.0,
+        "context_precision": 0.9167,
+        "average": 0.9596
+      },
+      "worse_config": "A",
+      "failure_stage": "generation",
+      "root_cause": "context ổn (recall=0.45) nhưng answer relevance=0.19, faithfulness=1.00",
+      "sources_A": [
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "dense",
+          "score": 0.0888
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "dense",
+          "score": 0.0816
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "dense",
+          "score": 0.0807
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "dense",
+          "score": 0.0763
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "dense",
+          "score": 0.0607
+        }
+      ],
+      "sources_B": [
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "hybrid",
+          "score": 0.0164
+        },
+        {
+          "source": "luat-cong-nghe-cao-2025-so-133-2025-qh15.md",
+          "method": "hybrid",
+          "score": 0.0164
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "hybrid",
+          "score": 0.0161
+        },
+        {
+          "source": "luat-cong-nghe-cao-2025-so-133-2025-qh15.md",
+          "method": "hybrid",
+          "score": 0.0161
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "hybrid",
+          "score": 0.0159
+        }
+      ],
+      "answer_A": "ám sát chất lượng nước sạch và vệ sinh trường học.- Đơn vị thực hiện: Ủy ban nhân dân tỉnh, thành phố chỉ đạo các đơn vị liên quan tổ chức mua sắm, cấp phát, tiếp nhận và sử dụng hiệu quả. b) Tiểu dự án 2: Phòng, chống chủ động dịch bệnh truyền nhiễm nguy hiểm - Nội dung thực hiện: + Hoạt động giám sát trọng điểm các bệnh truyền nhiễm: Tổ chức mua sinh phẩm, hoá chất, vật tư tiêu hao phục vụ xét n",
+      "answer_B": "Nhà nước xác định phát triển công nghệ cao, công nghệ chiến lược là đột phá chiến lược để phát triển nhanh, bền vững kinh tế - xã hội, bảo đảm quốc phòng, an ninh và nâng cao năng lực tự chủ công nghệ quốc gia; áp dụng các mức ưu đãi cao nhất theo quy định của pháp luật về đầu tư, thuế, đất đai và các chính sách có liên quan đối với hoạt động công nghệ cao, công nghệ chiến lược. [Source: luat-cong"
+    },
+    {
+      "index": 10,
+      "question": "Thông tư 34/2026/TT-BYT hướng dẫn chương trình mục tiêu quốc gia nào và giai đoạn nào?",
+      "in_corpus": true,
+      "A": {
+        "faithfulness": 1.0,
+        "answer_relevance": 0.3852,
+        "context_recall": 0.5946,
+        "context_precision": 1.0,
+        "average": 0.745
+      },
+      "B": {
+        "faithfulness": 1.0,
+        "answer_relevance": 0.9824,
+        "context_recall": 1.0,
+        "context_precision": 1.0,
+        "average": 0.9956
+      },
+      "worse_config": "A",
+      "failure_stage": "generation",
+      "root_cause": "context ổn (recall=0.59) nhưng answer relevance=0.39, faithfulness=1.00",
+      "sources_A": [
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "dense",
+          "score": 0.1022
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "dense",
+          "score": 0.092
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "dense",
+          "score": 0.0911
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "dense",
+          "score": 0.086
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "dense",
+          "score": 0.0786
+        }
+      ],
+      "sources_B": [
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "hybrid",
+          "score": 0.0164
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "hybrid",
+          "score": 0.0164
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "hybrid",
+          "score": 0.0161
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "hybrid",
+          "score": 0.0161
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "hybrid",
+          "score": 0.0159
+        }
+      ],
+      "answer_A": "Bộ Y tế ít nhất 1 lần trong mỗi giai đoạn 5 năm %Khái niệm: Chỉ số này cho biết tỷ lệ người từ 18 đến 69 tuổi được đánh giá nguy cơ và sàng lọc lồng ghép các bệnh không lây nhiễm theo hướng dẫn của Bộ Y tế ít nhất một lần trong mỗi giai đoạn 5 năm. [Source: thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md]\n\nPhương pháp tính: - Tử số: Số người từ 18 đến 69 tuổi được đánh giá nguy cơ, sàng lọc lồ",
+      "answer_B": "nhiệm vụ, quyền hạn và cơ cấu tổ chức của Bộ Y tế;Theo đề nghị của Vụ trưởng Vụ Kế hoạch - Tài chính; Bộ trưởng Bộ Y tế ban hành Thông tư hướng dẫn một số nội dung thực hiện Chương trình mục tiêu quốc gia về chăm sóc sức khỏe, dân số và phát triển giai đoạn 2026-2035, giai đoạn I: từ năm 2026 đến năm 2030 thuộc phạm vi quản lý nhà nước của Bộ Y tế. [Source: thong-tu-34-2026-tt-byt-cham-soc-suc-kho"
+    },
+    {
+      "index": 11,
+      "question": "Thông tư 34/2026/TT-BYT có hiệu lực thi hành ngày nào?",
+      "in_corpus": true,
+      "A": {
+        "faithfulness": 1.0,
+        "answer_relevance": 0.25,
+        "context_recall": 0.3077,
+        "context_precision": 0.45,
+        "average": 0.5019
+      },
+      "B": {
+        "faithfulness": 1.0,
+        "answer_relevance": 0.8667,
+        "context_recall": 0.9231,
+        "context_precision": 0.6389,
+        "average": 0.8572
+      },
+      "worse_config": "A",
+      "failure_stage": "retrieval",
+      "root_cause": "context recall=0.31, precision=0.45: đoạn vàng có trong corpus nhưng top-5 không đưa đủ evidence",
+      "sources_A": [
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "dense",
+          "score": 0.1556
+        },
+        {
+          "source": "luat-cong-nghe-cao-2025-so-133-2025-qh15.md",
+          "method": "dense",
+          "score": 0.1468
+        },
+        {
+          "source": "luat-cong-nghe-cao-2025-so-133-2025-qh15.md",
+          "method": "dense",
+          "score": 0.1467
+        },
+        {
+          "source": "luat-cong-nghe-cao-2025-so-133-2025-qh15.md",
+          "method": "dense",
+          "score": 0.1419
+        },
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "dense",
+          "score": 0.1394
+        }
+      ],
+      "sources_B": [
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "hybrid",
+          "score": 0.0164
+        },
+        {
+          "source": "article_04.md",
+          "method": "hybrid",
+          "score": 0.0164
+        },
+        {
+          "source": "luat-cong-nghe-cao-2025-so-133-2025-qh15.md",
+          "method": "hybrid",
+          "score": 0.0161
+        },
+        {
+          "source": "luat-cong-nghe-cao-2025-so-133-2025-qh15.md",
+          "method": "hybrid",
+          "score": 0.0161
+        },
+        {
+          "source": "luat-cong-nghe-cao-2025-so-133-2025-qh15.md",
+          "method": "hybrid",
+          "score": 0.0159
+        }
+      ],
+      "answer_A": "Nhà nước có chính sách ưu đãi thu hút đầu tư nước ngoài chất lượng cao thông qua liên doanh, hợp tác nghiên cứu và phát triển, đồng phát triển và chuyển giao công nghệ có điều kiện; gắn đầu tư với nâng cao tỷ lệ nội địa hóa, hình thành cơ sở nghiên cứu và phát triển, đào tạo, phát triển chuỗi cung ứng và nâng cao năng lực làm chủ công nghệ của doanh nghiệp Việt Nam; tạo điều kiện cho doanh nghiệp ",
+      "answer_B": "Quyết định này có hiệu lực thi hành kể từ ngày ký.Cụ thể tại Quyết định số 2551/QĐ-BTC, Bộ Tài chính đính chính khoản 5 Điều 99 Thông tư số 89/2026/TT-BTC. [Source: article_04.md]\n\nLuật này có hiệu lực thi hành từ ngày 01 tháng 7 năm 2026. [Source: luat-cong-nghe-cao-2025-so-133-2025-qh15.md]\n\nNhà nước có chính sách ưu đãi thu hút đầu tư nước ngoài chất lượng cao thông qua liên doanh, hợp tác nghi"
+    },
+    {
+      "index": 12,
+      "question": "Việc thực hiện Chương trình theo Thông tư 34/2026/TT-BYT phải bảo đảm nguyên tắc gì về trùng lặp nguồn lực?",
+      "in_corpus": true,
+      "A": {
+        "faithfulness": 1.0,
+        "answer_relevance": 0.1874,
+        "context_recall": 0.3333,
+        "context_precision": 0.2,
+        "average": 0.4302
+      },
+      "B": {
+        "faithfulness": 1.0,
+        "answer_relevance": 0.4585,
+        "context_recall": 0.3704,
+        "context_precision": 0.5,
+        "average": 0.5822
+      },
+      "worse_config": "A",
+      "failure_stage": "retrieval",
+      "root_cause": "context recall=0.33, precision=0.20: đoạn vàng có trong corpus nhưng top-5 không đưa đủ evidence",
+      "sources_A": [
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "dense",
+          "score": 0.0748
+        },
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "dense",
+          "score": 0.0691
+        },
+        {
+          "source": "luat-cong-nghe-cao-2025-so-133-2025-qh15.md",
+          "method": "dense",
+          "score": 0.063
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "dense",
+          "score": 0.0625
+        },
+        {
+          "source": "luat-cong-nghe-cao-2025-so-133-2025-qh15.md",
+          "method": "dense",
+          "score": 0.0612
+        }
+      ],
+      "sources_B": [
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "hybrid",
+          "score": 0.0164
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "hybrid",
+          "score": 0.0164
+        },
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "hybrid",
+          "score": 0.0161
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "hybrid",
+          "score": 0.0161
+        },
+        {
+          "source": "luat-cong-nghe-cao-2025-so-133-2025-qh15.md",
+          "method": "hybrid",
+          "score": 0.0159
+        }
+      ],
+      "answer_A": "trình UBND cấp tỉnh Bộ Y tế (Cục Phòng bệnh) 7Tỷ lệ người được phát hiện nghi ngờ mắc bệnh không lây nhiễm và rối loạn tâm thần được khám, chẩn đoán, điều trị, quản lý theo hướng dẫn chuyên môn trên toàn quốc % Khái niệm: Chỉ số này cho biết tỷ lệ người được phát hiện nghi ngờ mắc bệnh không lây nhiễm và rối loạn tâm thần được khám, chẩn đoán, điều trị, quản lý theo hướng dẫn chuyên môn. [Source: ",
+      "answer_B": "BỘ TRƯỞNG THỨ TRƯỞNG Nguyễn Thị Liên Hương PHỤ LỤC I ĐẦU TƯ CƠ SỞ HẠ TẦNG, MUA SẮM THIẾT BỊ, VẬT TƯ, HÀNG HÓA, DỊCH VỤ CỦA CHƯƠNG TRÌNH (Ban hành kèm theo Thông tư số 34/2026/TT-BYT ngày 08 tháng 9 năm 2026 của Bộ trưởng Bộ Y tế) 1. [Source: thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md]\n\nViệc thực hiện Chương trình tuân thủ các nguyên tắc quy định tại Điều 4 Nghị định số 358/2025/NĐ-CP quy "
+    },
+    {
+      "index": 13,
+      "question": "Công an TP.Hồ Chí Minh nói gì về việc cắt giảm thủ tục hành chính trong lĩnh vực PCCC và CNCH?",
+      "in_corpus": true,
+      "A": {
+        "faithfulness": 1.0,
+        "answer_relevance": 0.2181,
+        "context_recall": 0.4681,
+        "context_precision": 1.0,
+        "average": 0.6715
+      },
+      "B": {
+        "faithfulness": 1.0,
+        "answer_relevance": 0.627,
+        "context_recall": 0.8511,
+        "context_precision": 1.0,
+        "average": 0.8695
+      },
+      "worse_config": "A",
+      "failure_stage": "generation",
+      "root_cause": "context ổn (recall=0.47) nhưng answer relevance=0.22, faithfulness=1.00",
+      "sources_A": [
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "dense",
+          "score": 0.1405
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "dense",
+          "score": 0.1018
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "dense",
+          "score": 0.0982
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "dense",
+          "score": 0.094
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "dense",
+          "score": 0.0913
+        }
+      ],
+      "sources_B": [
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "hybrid",
+          "score": 0.0164
+        },
+        {
+          "source": "article_01.md",
+          "method": "hybrid",
+          "score": 0.0164
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "hybrid",
+          "score": 0.0161
+        },
+        {
+          "source": "article_01.md",
+          "method": "hybrid",
+          "score": 0.0161
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "hybrid",
+          "score": 0.0159
+        }
+      ],
+      "answer_A": "+ Truyền thông, vận động, chuyển đổi hành vi và nâng cao nhận thức của cộng đồng về bệnh Thalassemia: [Source: thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md]\n\nUBND cấp tỉnh Bộ Y tế (Trung tâm Thông tin Y tế Quốc gia) Truyền thông dân số 66 Tỷ lệ cấp ủy, chính quyền, mặt trận tổ quốc Việt Nam và các tổ chức chính trị - xã hội các cấp được định kỳ cung cấp thông tin và tham gia truyền thông, v",
+      "answer_B": "# Công an TP.Hồ Chí Minh: Việc cắt giảm, đơn giản hóa thủ tục hành chính trong lĩnh vực PCCC & CNCH không đồng nghĩa với việc giảm các yêu cầu bảo đảm an toàn **Source:** https://thuvienphapluat.vn/chinh-sach-phap-luat-moi/vn/ho-tro-phap-luat/chi-dao-dieu-hanh/34229/che-do-thuong-truc-san-sang-chua-chay-cuu-nan-cuu-ho-cua-luc-luong-cong-an **Crawled:** 2026-09-20T15:33:53 --- [Source: article_01.m"
+    },
+    {
+      "index": 14,
+      "question": "Mục tiêu GRDP của TP.Hồ Chí Minh giai đoạn 2026-2030 theo dự thảo Chương trình hành động triển khai Nghị quyết Trung ương 3 là gì?",
+      "in_corpus": true,
+      "A": {
+        "faithfulness": 1.0,
+        "answer_relevance": 0.1132,
+        "context_recall": 0.1587,
+        "context_precision": 0.0,
+        "average": 0.318
+      },
+      "B": {
+        "faithfulness": 1.0,
+        "answer_relevance": 0.3007,
+        "context_recall": 1.0,
+        "context_precision": 0.5,
+        "average": 0.7002
+      },
+      "worse_config": "A",
+      "failure_stage": "retrieval",
+      "root_cause": "context recall=0.16, precision=0.00: đoạn vàng có trong corpus nhưng top-5 không đưa đủ evidence",
+      "sources_A": [
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "dense",
+          "score": 0.0928
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "dense",
+          "score": 0.0924
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "dense",
+          "score": 0.0797
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "dense",
+          "score": 0.0774
+        },
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "dense",
+          "score": 0.0763
+        }
+      ],
+      "sources_B": [
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "hybrid",
+          "score": 0.0164
+        },
+        {
+          "source": "article_05.md",
+          "method": "hybrid",
+          "score": 0.0164
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "hybrid",
+          "score": 0.0161
+        },
+        {
+          "source": "article_05.md",
+          "method": "hybrid",
+          "score": 0.0161
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "hybrid",
+          "score": 0.0159
+        }
+      ],
+      "answer_A": "+ Tổ chức quản lý vắc xin và vật tư: Việc quản lý, bảo quản, vận chuyển và sử dụng vắc xin, vật tư tiêm chủng thực hiện theo quy định của pháp luật về thực hành tốt bảo quản thuốc (GSP) và thực hành tốt phân phối thuốc (GDP) và Thông tư số 13/2026/TT-BYT quy định về hoạt động tiêm chủng. [Source: thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md]\n\n+ Hỗ trợ kỹ thuật thực hiện hoạt động tại địa ph",
+      "answer_B": "# TP.Hồ Chí Minh quán triệt, triển khai Nghị quyết Trung ương 3 với 7 nhóm giải pháp đột phá **Source:** https://thuvienphapluat.vn/chinh-sach-phap-luat-moi/vn/ho-tro-phap-luat/chi-dao-dieu-hanh/14155/tp-ho-chi-minh-quan-triet-trien-khai-nghi-quyet-trung-uong-3-voi-7-nhom-giai-phap-dot-pha **Crawled:** 2026-09-20T15:33:53 --- TP.Hồ Chí Minh quán triệt, triển khai Nghị quyết Trung ương 3 với 7 nhóm"
+    }
+  ],
+  "worst": [
+    {
+      "index": 14,
+      "question": "Mục tiêu GRDP của TP.Hồ Chí Minh giai đoạn 2026-2030 theo dự thảo Chương trình hành động triển khai Nghị quyết Trung ương 3 là gì?",
+      "in_corpus": true,
+      "A": {
+        "faithfulness": 1.0,
+        "answer_relevance": 0.1132,
+        "context_recall": 0.1587,
+        "context_precision": 0.0,
+        "average": 0.318
+      },
+      "B": {
+        "faithfulness": 1.0,
+        "answer_relevance": 0.3007,
+        "context_recall": 1.0,
+        "context_precision": 0.5,
+        "average": 0.7002
+      },
+      "worse_config": "A",
+      "failure_stage": "retrieval",
+      "root_cause": "context recall=0.16, precision=0.00: đoạn vàng có trong corpus nhưng top-5 không đưa đủ evidence",
+      "sources_A": [
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "dense",
+          "score": 0.0928
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "dense",
+          "score": 0.0924
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "dense",
+          "score": 0.0797
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "dense",
+          "score": 0.0774
+        },
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "dense",
+          "score": 0.0763
+        }
+      ],
+      "sources_B": [
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "hybrid",
+          "score": 0.0164
+        },
+        {
+          "source": "article_05.md",
+          "method": "hybrid",
+          "score": 0.0164
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "hybrid",
+          "score": 0.0161
+        },
+        {
+          "source": "article_05.md",
+          "method": "hybrid",
+          "score": 0.0161
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "hybrid",
+          "score": 0.0159
+        }
+      ],
+      "answer_A": "+ Tổ chức quản lý vắc xin và vật tư: Việc quản lý, bảo quản, vận chuyển và sử dụng vắc xin, vật tư tiêm chủng thực hiện theo quy định của pháp luật về thực hành tốt bảo quản thuốc (GSP) và thực hành tốt phân phối thuốc (GDP) và Thông tư số 13/2026/TT-BYT quy định về hoạt động tiêm chủng. [Source: thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md]\n\n+ Hỗ trợ kỹ thuật thực hiện hoạt động tại địa ph",
+      "answer_B": "# TP.Hồ Chí Minh quán triệt, triển khai Nghị quyết Trung ương 3 với 7 nhóm giải pháp đột phá **Source:** https://thuvienphapluat.vn/chinh-sach-phap-luat-moi/vn/ho-tro-phap-luat/chi-dao-dieu-hanh/14155/tp-ho-chi-minh-quan-triet-trien-khai-nghi-quyet-trung-uong-3-voi-7-nhom-giai-phap-dot-pha **Crawled:** 2026-09-20T15:33:53 --- TP.Hồ Chí Minh quán triệt, triển khai Nghị quyết Trung ương 3 với 7 nhóm"
+    },
+    {
+      "index": 12,
+      "question": "Việc thực hiện Chương trình theo Thông tư 34/2026/TT-BYT phải bảo đảm nguyên tắc gì về trùng lặp nguồn lực?",
+      "in_corpus": true,
+      "A": {
+        "faithfulness": 1.0,
+        "answer_relevance": 0.1874,
+        "context_recall": 0.3333,
+        "context_precision": 0.2,
+        "average": 0.4302
+      },
+      "B": {
+        "faithfulness": 1.0,
+        "answer_relevance": 0.4585,
+        "context_recall": 0.3704,
+        "context_precision": 0.5,
+        "average": 0.5822
+      },
+      "worse_config": "A",
+      "failure_stage": "retrieval",
+      "root_cause": "context recall=0.33, precision=0.20: đoạn vàng có trong corpus nhưng top-5 không đưa đủ evidence",
+      "sources_A": [
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "dense",
+          "score": 0.0748
+        },
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "dense",
+          "score": 0.0691
+        },
+        {
+          "source": "luat-cong-nghe-cao-2025-so-133-2025-qh15.md",
+          "method": "dense",
+          "score": 0.063
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "dense",
+          "score": 0.0625
+        },
+        {
+          "source": "luat-cong-nghe-cao-2025-so-133-2025-qh15.md",
+          "method": "dense",
+          "score": 0.0612
+        }
+      ],
+      "sources_B": [
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "hybrid",
+          "score": 0.0164
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "hybrid",
+          "score": 0.0164
+        },
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "hybrid",
+          "score": 0.0161
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "hybrid",
+          "score": 0.0161
+        },
+        {
+          "source": "luat-cong-nghe-cao-2025-so-133-2025-qh15.md",
+          "method": "hybrid",
+          "score": 0.0159
+        }
+      ],
+      "answer_A": "trình UBND cấp tỉnh Bộ Y tế (Cục Phòng bệnh) 7Tỷ lệ người được phát hiện nghi ngờ mắc bệnh không lây nhiễm và rối loạn tâm thần được khám, chẩn đoán, điều trị, quản lý theo hướng dẫn chuyên môn trên toàn quốc % Khái niệm: Chỉ số này cho biết tỷ lệ người được phát hiện nghi ngờ mắc bệnh không lây nhiễm và rối loạn tâm thần được khám, chẩn đoán, điều trị, quản lý theo hướng dẫn chuyên môn. [Source: ",
+      "answer_B": "BỘ TRƯỞNG THỨ TRƯỞNG Nguyễn Thị Liên Hương PHỤ LỤC I ĐẦU TƯ CƠ SỞ HẠ TẦNG, MUA SẮM THIẾT BỊ, VẬT TƯ, HÀNG HÓA, DỊCH VỤ CỦA CHƯƠNG TRÌNH (Ban hành kèm theo Thông tư số 34/2026/TT-BYT ngày 08 tháng 9 năm 2026 của Bộ trưởng Bộ Y tế) 1. [Source: thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md]\n\nViệc thực hiện Chương trình tuân thủ các nguyên tắc quy định tại Điều 4 Nghị định số 358/2025/NĐ-CP quy "
+    },
+    {
+      "index": 7,
+      "question": "Công nghệ chiến lược khác công nghệ cao ở điểm nào theo Luật 133/2025/QH15?",
+      "in_corpus": true,
+      "A": {
+        "faithfulness": 1.0,
+        "answer_relevance": 0.025,
+        "context_recall": 0.3261,
+        "context_precision": 0.45,
+        "average": 0.4503
+      },
+      "B": {
+        "faithfulness": 1.0,
+        "answer_relevance": 0.2663,
+        "context_recall": 0.3478,
+        "context_precision": 0.6389,
+        "average": 0.5633
+      },
+      "worse_config": "A",
+      "failure_stage": "retrieval",
+      "root_cause": "context recall=0.33, precision=0.45: đoạn vàng có trong corpus nhưng top-5 không đưa đủ evidence",
+      "sources_A": [
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "dense",
+          "score": 0.0543
+        },
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "dense",
+          "score": 0.0525
+        },
+        {
+          "source": "luat-cong-nghe-cao-2025-so-133-2025-qh15.md",
+          "method": "dense",
+          "score": 0.0501
+        },
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "dense",
+          "score": 0.0492
+        },
+        {
+          "source": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.md",
+          "method": "dense",
+          "score": 0.0478
+        }
+      ],
+      "sources_B": [
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "hybrid",
+          "score": 0.0164
+        },
+        {
+          "source": "luat-cong-nghe-cao-2025-so-133-2025-qh15.md",
+          "method": "hybrid",
+          "score": 0.0164
+        },
+        {
+          "source": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md",
+          "method": "hybrid",
+          "score": 0.0161
+        },
+        {
+          "source": "luat-cong-nghe-cao-2025-so-133-2025-qh15.md",
+          "method": "hybrid",
+          "score": 0.0161
+        },
+        {
+          "source": "luat-cong-nghe-cao-2025-so-133-2025-qh15.md",
+          "method": "hybrid",
+          "score": 0.0159
+        }
+      ],
+      "answer_A": "Sửa đổi, bổ sung một số điểm, khoản của Điều 80 1. [Source: nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md]\n\nBãi bỏ cụm từ “, cơ quan thuộc Chính phủ” tại điểm k khoản 4 Điều 84; khoản 1 Điều 89; điểm a khoản 1 và khoản 2 Điều 122; điểm a khoản 2 Điều 128; điểm a khoản 1 và điểm c khoản 2 Điều 139; khoản 4 Điều 146. [Source: nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.md]",
+      "answer_B": ") Sửa đổi, bổ sung điểm i khoản 1 Điều 10 như sau:“i) Sản phẩm công nghệ chiến lược thuộc Danh mục sản phẩm công nghệ chiến lược và sản phẩm công nghệ cao thuộc Danh mục sản phẩm công nghệ cao được khuyến khích phát triển được sản xuất bởi doanh nghiệp công nghệ chiến lược, doanh nghiệp công nghệ cao, doanh nghiệp sản xuất sản phẩm công nghệ cao theo pháp luật về công nghệ cao; sản phẩm, hàng hóa "
+    }
+  ]
+}
