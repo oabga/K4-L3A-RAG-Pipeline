@@ -29,9 +29,14 @@ from crawl4ai.browser_manager import BrowserManager
 
 DATA_DIR = Path(__file__).parent.parent / "data" / "landing" / "news"
 
-# 3 URL được phân công cho thành viên crawl bài viết.
-# Nhóm vẫn cần đủ 5 URL trước khi chạy acceptance test.
+# Thứ tự khớp article_01.json … article_08.json trong data/landing/news/.
+# 01–05: hoang-minh (Thư viện Pháp luật). 06–08: LeGiaBao (thuế hộ kinh doanh).
 ARTICLE_URLS = [
+    "https://thuvienphapluat.vn/chinh-sach-phap-luat-moi/vn/ho-tro-phap-luat/chi-dao-dieu-hanh/34229/che-do-thuong-truc-san-sang-chua-chay-cuu-nan-cuu-ho-cua-luc-luong-cong-an",
+    "https://thuvienphapluat.vn/chinh-sach-phap-luat-moi/vn/ho-tro-phap-luat/chi-dao-dieu-hanh/25259/4-muc-do-tuan-thu-phap-luat-thue-va-cac-bien-phap-nang-cao-tuan-thu-theo-thong-tu-so-94-2026-tt-btc",
+    "https://thuvienphapluat.vn/chinh-sach-phap-luat-moi/vn/ho-tro-phap-luat/chi-dao-dieu-hanh/25227/lay-y-kien-gop-y-quy-dinh-viec-huy-dong-su-dung-nguon-luc-trong-linh-vuc-khoa-hoc-cong-nghe-doi-moi-sang-tao-va-chuyen-doi-so",
+    "https://thuvienphapluat.vn/chinh-sach-phap-luat-moi/vn/ho-tro-phap-luat/chi-dao-dieu-hanh/31304/dinh-chinh-thay-the-mot-so-bieu-mau-trong-quan-ly-thue-tai-thong-tu-89",
+    "https://thuvienphapluat.vn/chinh-sach-phap-luat-moi/vn/ho-tro-phap-luat/chi-dao-dieu-hanh/14155/tp-ho-chi-minh-quan-triet-trien-khai-nghi-quyet-trung-uong-3-voi-7-nhom-giai-phap-dot-pha",
     "https://tapchikinhtetaichinh.vn/giai-phap-chinh-sach-va-quan-ly-thue-ho-tro-ho-va-ca-nhan-kinh-doanh-doanh-nghiep-nho-va-sieu-nho-trong-giai-doan-moi-161740.html",
     "https://techcombank.com/thong-tin/blog/thue-thuong-mai-dien-tu",
     "https://baomoi.com/tang-quan-ly-thue-doi-voi-ca-nhan-ho-kinh-doanh-c56082733.epi",
@@ -51,6 +56,7 @@ CSS_SELECTORS = {
     "techcombank.com": "article, main, .blog-detail, .cmp-text",
     "baomoi.com": "article, .content, .detail, .bm-card-content",
     "baodongnai.com.vn": "article, .detail-content, .article-content, .content-detail",
+    "thuvienphapluat.vn": "article, .content, .news-content, .detail-content",
 }
 
 
