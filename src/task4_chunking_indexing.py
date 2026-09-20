@@ -80,25 +80,66 @@ def _embed_gemini(texts: list[str]) -> list[list[float]]:
     return [item.values for item in response.embeddings]
 
 
+def _embed_hashing(texts: list[str]) -> list[list[float]]:
+    """Fallback local khi thiếu API key / không tải được model."""
+    from sklearn.feature_extraction.text import HashingVectorizer
+
+    vectorizer = HashingVectorizer(
+        n_features=384,
+        alternate_sign=False,
+        norm="l2",
+        analyzer="word",
+        ngram_range=(1, 2),
+    )
+    return vectorizer.transform(texts).toarray().tolist()
+
+
 _EMBEDDERS = {
     "sentence_transformers": _embed_sentence_transformers,
     "openai": _embed_openai,
     "gemini": _embed_gemini,
+    "hashing": _embed_hashing,
 }
+
+
+def _resolved_embedder_name() -> str:
+    provider = EMBEDDING_PROVIDER
+    if provider == "openai" and not os.getenv("OPENAI_API_KEY", "").strip():
+        return "hashing"
+    if provider == "gemini" and not os.getenv("GEMINI_API_KEY", "").strip():
+        return "hashing"
+    return provider
 
 
 def embed_texts(texts: list[str]) -> list[list[float]]:
     """Embed danh sách text bằng provider trong EMBEDDING_PROVIDER."""
     if not texts:
         return []
+    provider = _resolved_embedder_name()
     try:
-        embedder = _EMBEDDERS[EMBEDDING_PROVIDER]
+        embedder = _EMBEDDERS[provider]
     except KeyError:
         raise ValueError(
             f"EMBEDDING_PROVIDER={EMBEDDING_PROVIDER!r} không hợp lệ; "
             f"chọn một trong {sorted(_EMBEDDERS)}"
         ) from None
     return embedder(texts)
+
+
+def reset_collection():
+    """Xóa collection cũ để tránh lệch chiều embedding khi đổi provider."""
+    import chromadb
+
+    CHROMA_DIR.mkdir(parents=True, exist_ok=True)
+    client = chromadb.PersistentClient(path=str(CHROMA_DIR))
+    try:
+        client.delete_collection(COLLECTION_NAME)
+    except Exception:
+        pass
+    return client.get_or_create_collection(
+        name=COLLECTION_NAME,
+        metadata={"hnsw:space": "cosine"},
+    )
 
 
 def get_collection():
@@ -176,9 +217,9 @@ def embed_chunks(chunks: list[dict]) -> list[dict]:
     return chunks
 
 
-def index_to_vectorstore(chunks: list[dict]) -> None:
+def index_to_vectorstore(chunks: list[dict], *, reset: bool = False) -> None:
     """Upsert chunks vào ChromaDB."""
-    collection = get_collection()
+    collection = reset_collection() if reset else get_collection()
     for start in range(0, len(chunks), INDEX_BATCH_SIZE):
         batch = chunks[start:start + INDEX_BATCH_SIZE]
         collection.upsert(
@@ -199,8 +240,9 @@ def run_pipeline() -> None:
     chunks = chunk_documents(documents)
     print(f"Loaded {len(documents)} documents -> {len(chunks)} chunks")
     embedded_chunks = embed_chunks(chunks)
-    index_to_vectorstore(embedded_chunks)
-    print(f"Indexed {len(embedded_chunks)} chunks")
+    dim = len(embedded_chunks[0]["embedding"]) if embedded_chunks else 0
+    index_to_vectorstore(embedded_chunks, reset=True)
+    print(f"Indexed {len(embedded_chunks)} chunks | dim={dim} | provider={_resolved_embedder_name()}")
 
 
 if __name__ == "__main__":

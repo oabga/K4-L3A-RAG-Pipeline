@@ -14,11 +14,20 @@ def semantic_search(query: str, top_k: int = 10) -> list[dict]:
         return []
 
     query_vector = embed_texts([query])[0]
-    response = get_collection().query(
-        query_embeddings=[query_vector],
-        n_results=top_k,
-        include=["documents", "metadatas", "distances"],
-    )
+    try:
+        response = get_collection().query(
+            query_embeddings=[query_vector],
+            n_results=top_k,
+            include=["documents", "metadatas", "distances"],
+        )
+    except Exception as error:
+        message = str(error)
+        if "dimension" in message.lower():
+            raise RuntimeError(
+                "ChromaDB lệch chiều embedding (collection cũ khác model hiện tại). "
+                "Chạy lại: python -m src.task4_chunking_indexing"
+            ) from error
+        raise
 
     results = []
     for item_id, content, metadata, distance in zip(

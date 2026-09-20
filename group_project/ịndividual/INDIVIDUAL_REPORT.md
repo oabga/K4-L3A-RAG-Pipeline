@@ -8,6 +8,8 @@ reports/<student-id>-<short-name>.md
 
 Giới hạn khuyến nghị: 1 trang, không chép lại README hoặc mô tả lý thuyết chung. Báo cáo không phải một bài pipeline cá nhân; mục đích là ghi nhận ownership và bằng chứng đóng góp trong sản phẩm nhóm.
 
+Bản đã nộp: [`reports/2A202602887-LeGiaBao.md`](../../reports/2A202602887-LeGiaBao.md)
+
 ---
 
 ## Thông tin
