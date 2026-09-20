@@ -18,23 +18,29 @@ from pathlib import Path
 
 LANDING_DIR = Path(__file__).parent.parent / "data" / "landing"
 OUTPUT_DIR = Path(__file__).parent.parent / "data" / "standardized"
+LEGAL_EXTENSIONS = {".pdf", ".doc", ".docx"}
+MIN_MARKDOWN_CHARS = 200
 
 
 def convert_legal_docs() -> None:
-    # TODO:Convert PDF/DOCX vào standardized/legal. 
-    #
-    # from markitdown import MarkItDown
-    # legal_dir = LANDING_DIR / "legal"
-    # output_dir = OUTPUT_DIR / "legal"
-    # output_dir.mkdir(parents=True, exist_ok=True)
-    # converter = MarkItDown()
-    # for path in legal_dir.iterdir():
-    #     if path.suffix.lower() in {".pdf", ".doc", ".docx"}:
-    #         result = converter.convert(str(path))
-    #         (output_dir / f"{path.stem}.md").write_text(
-    #             result.text_content, encoding="utf-8"
-    #         )
-    raise NotImplementedError("Implement convert_legal_docs")
+    """Convert PDF/DOCX trong landing/legal sang standardized/legal."""
+    from markitdown import MarkItDown
+
+    legal_dir = LANDING_DIR / "legal"
+    output_dir = OUTPUT_DIR / "legal"
+    output_dir.mkdir(parents=True, exist_ok=True)
+    converter = MarkItDown()
+
+    for path in sorted(legal_dir.iterdir()):
+        if path.suffix.lower() not in LEGAL_EXTENSIONS:
+            continue
+        text = converter.convert(str(path)).text_content.strip()
+        if len(text) < MIN_MARKDOWN_CHARS:
+            print(f"SKIP {path.name}: only {len(text)} chars (scanned file?)")
+            continue
+
+        (output_dir / f"{path.stem}.md").write_text(text + "\n", encoding="utf-8")
+        print(f"OK   {path.name} -> {path.stem}.md ({len(text)} chars)")
 
 
 def convert_news_articles() -> None:
