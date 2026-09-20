@@ -32,9 +32,18 @@ CHUNK_SIZE = 500
 CHUNK_OVERLAP = 50
 CHUNKING_METHOD = "recursive"
 
-EMBEDDING_PROVIDER = os.getenv("EMBEDDING_PROVIDER", "sentence_transformers")
-EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL") or "BAAI/bge-m3"
-EMBEDDING_DIM = 1024  # dimension của BAAI/bge-m3; đổi model thì phải index lại.
+# Nhóm dùng OpenAI làm provider embedding mặc định (text-embedding-3-small, 1536 chiều).
+# Đổi provider hoặc model thì phải xóa chroma_db/ và index lại.
+DEFAULT_MODELS = {
+    "openai": "text-embedding-3-small",
+    "gemini": "gemini-embedding-001",
+    "sentence_transformers": "BAAI/bge-m3",
+}
+EMBEDDING_PROVIDER = os.getenv("EMBEDDING_PROVIDER") or "openai"
+EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL") or DEFAULT_MODELS.get(
+    EMBEDDING_PROVIDER, ""
+)
+EMBEDDING_DIM = 1536  # dimension của text-embedding-3-small.
 
 COLLECTION_NAME = "rag_documents"
 
@@ -59,7 +68,7 @@ def _embed_sentence_transformers(texts: list[str]) -> list[list[float]]:
 def _embed_openai(texts: list[str]) -> list[list[float]]:
     from openai import OpenAI
 
-    response = OpenAI().embeddings.create(model=EMBEDDING_MODEL, input=texts)
+    response = OpenAI(max_retries=5).embeddings.create(model=EMBEDDING_MODEL, input=texts)
     return [item.embedding for item in response.data]
 
 
