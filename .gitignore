@@ -37,6 +37,7 @@ htmlcov/
 
 # Temp PDF conversion cache
 data/_tmp_pdf/
+data/_raw/
 
 # Temp / cache
 .pytest_cache/
@@ -44,6 +45,7 @@ data/_tmp_pdf/
 *.log
 pageindex_doc_ids.json
 pageindex_pdfs/
+chroma_db/
 
 # Jupyter
 .ipynb_checkpoints/
