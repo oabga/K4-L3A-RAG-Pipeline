@@ -64,7 +64,11 @@ def faithfulness(answer: str, chunks: list[dict]) -> float:
     cleaned = re.sub(r"\[Source:.*?\]", " ", answer)
     if SAFE_REFUSAL in answer:
         return 1.0 if not chunks else 0.0
-    sentences = [part.strip() for part in re.split(r"(?<=[\.!?…])\s+", cleaned) if len(part.strip()) > 20]
+    sentences = [
+        part.strip()
+        for part in re.split(r"(?<=[\.!?…])\s+", cleaned)
+        if len(part.strip()) > 20
+    ]
     if not sentences:
         sentences = [cleaned]
     ctx = _tokens(" ".join(item["content"] for item in chunks))
@@ -151,9 +155,13 @@ def run_config(name: str, retriever, cases: list[dict]) -> dict:
         elapsed.append(time.perf_counter() - started)
         metrics = {
             "faithfulness": round(faithfulness(answer, chunks), 4),
-            "answer_relevance": round(answer_relevance(question, answer, case["expected_answer"]), 4),
+            "answer_relevance": round(
+                answer_relevance(question, answer, case["expected_answer"]), 4
+            ),
             "context_recall": round(context_recall(chunks, case["expected_context"]), 4),
-            "context_precision": round(context_precision(chunks, case["expected_context"]), 4),
+            "context_precision": round(
+                context_precision(chunks, case["expected_context"]), 4
+            ),
         }
         metrics["average"] = round(mean(metrics.values()), 4)
         rows.append(
@@ -186,7 +194,9 @@ def main() -> None:
     in_corpus = [corpus_contains(case["expected_context"]) for case in cases]
 
     paired = []
-    for index, (row_a, row_b, present) in enumerate(zip(config_a["cases"], config_b["cases"], in_corpus)):
+    for index, (row_a, row_b, present) in enumerate(
+        zip(config_a["cases"], config_b["cases"], in_corpus)
+    ):
         worse = row_a if row_a["average"] <= row_b["average"] else row_b
         config_name = "A" if worse is row_a else "B"
         stage, cause = classify(worse, present)
@@ -195,8 +205,26 @@ def main() -> None:
                 "index": index,
                 "question": row_a["question"],
                 "in_corpus": present,
-                "A": {k: row_a[k] for k in ("faithfulness", "answer_relevance", "context_recall", "context_precision", "average")},
-                "B": {k: row_b[k] for k in ("faithfulness", "answer_relevance", "context_recall", "context_precision", "average")},
+                "A": {
+                    k: row_a[k]
+                    for k in (
+                        "faithfulness",
+                        "answer_relevance",
+                        "context_recall",
+                        "context_precision",
+                        "average",
+                    )
+                },
+                "B": {
+                    k: row_b[k]
+                    for k in (
+                        "faithfulness",
+                        "answer_relevance",
+                        "context_recall",
+                        "context_precision",
+                        "average",
+                    )
+                },
                 "worse_config": config_name,
                 "failure_stage": stage,
                 "root_cause": cause,
@@ -207,7 +235,9 @@ def main() -> None:
             }
         )
 
-    worst = sorted(paired, key=lambda item: min(item["A"]["average"], item["B"]["average"]))[:3]
+    worst = sorted(
+        paired, key=lambda item: min(item["A"]["average"], item["B"]["average"])
+    )[:3]
     payload = {
         "top_k": TOP_K,
         "fallback": "disabled (score_threshold=0)",
@@ -221,7 +251,14 @@ def main() -> None:
         "worst": worst,
     }
     OUT_PATH.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(json.dumps({"A": config_a["overall"], "B": config_b["overall"], "delta": payload["delta_B_minus_A"]}, indent=2))
+    print(json.dumps(
+        {
+            "A": config_a["overall"],
+            "B": config_b["overall"],
+            "delta": payload["delta_B_minus_A"],
+        },
+        indent=2,
+    ))
     print("\nWorst 3:")
     for item in worst:
         print(f"- [{item['worse_config']}/{item['failure_stage']}] {item['question'][:80]}")

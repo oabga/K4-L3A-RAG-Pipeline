@@ -7,39 +7,18 @@ Hướng dẫn:
     3. Lưu file gốc vào data/landing/legal/.
     4. Đặt tên không dấu và thể hiện đúng nội dung.
 
-Nguồn: Thư viện Pháp luật (nội dung văn bản công khai).
-Website dùng Cloudflare nên requests thường bị 403; nội dung đã được
-lấy từ trang công khai rồi lưu PDF có thể tìm kiếm.
+Corpus nhóm: văn bản pháp luật công khai (Nghị định/Thông tư/Luật).
+Nguồn đã gộp: baovq (DOCX) và hoang-minh (PDF).
+Nếu website chặn crawler, hãy chọn nguồn công khai khác; không vượt WAF.
 """
 
 from pathlib import Path
 
-from src.corpus_utils import write_text_pdf
-
 
 DATA_DIR = Path(__file__).parent.parent / "data" / "landing" / "legal"
-RAW_DIR = Path(__file__).parent.parent / "data" / "_raw" / "legal"
-
-LEGAL_SOURCES = [
-    {
-        "filename": "nghi-dinh-349-2026-nd-cp-lua-chon-nha-thau.pdf",
-        "raw_name": "nghi-dinh-349-2026.json",
-        "url": "https://thuvienphapluat.vn/van-ban/Dau-tu/Nghi-dinh-349-2026-ND-CP-sua-doi-cac-Nghi-dinh-huong-dan-Luat-Dau-thau-lua-chon-nha-thau-710002.aspx",
-        "title": "Nghị định 349/2026/NĐ-CP sửa đổi các Nghị định hướng dẫn Luật Đấu thầu về lựa chọn nhà thầu",
-    },
-    {
-        "filename": "luat-cong-nghe-cao-2025-so-133-2025-qh15.pdf",
-        "raw_name": "luat-cong-nghe-cao-2025.json",
-        "url": "https://thuvienphapluat.vn/van-ban/Linh-vuc-khac/Luat-Cong-nghe-cao-2025-so-133-2025-QH15-675211.aspx",
-        "title": "Luật Công nghệ cao 2025 số 133/2025/QH15",
-    },
-    {
-        "filename": "thong-tu-34-2026-tt-byt-cham-soc-suc-khoe-dan-so.pdf",
-        "raw_name": "thong-tu-34-2026-tt-byt.json",
-        "url": "https://thuvienphapluat.vn/van-ban/The-thao-Y-te/Thong-tu-34-2026-TT-BYT-huong-dan-Chuong-trinh-muc-tieu-quoc-gia-cham-soc-suc-khoe-dan-so-724066.aspx",
-        "title": "Thông tư 34/2026/TT-BYT hướng dẫn Chương trình mục tiêu quốc gia chăm sóc sức khỏe dân số",
-    },
-]
+DOCUMENT_EXTENSIONS = {".pdf", ".doc", ".docx"}
+MIN_DOCUMENTS = 3
+MIN_FILE_SIZE = 1024
 
 
 def setup_directory() -> None:
@@ -49,29 +28,23 @@ def setup_directory() -> None:
 
 
 def download_documents() -> None:
-    """Tạo PDF từ nội dung văn bản công khai đã thu thập."""
-    import json
+    """Kiểm tra các tài liệu đã tải thủ công vào data/landing/legal/."""
+    files = sorted(
+        path for path in DATA_DIR.iterdir()
+        if path.is_file() and path.suffix.lower() in DOCUMENT_EXTENSIONS
+    )
 
-    setup_directory()
-    missing = []
-    for source in LEGAL_SOURCES:
-        output = DATA_DIR / source["filename"]
-        raw_path = RAW_DIR / source["raw_name"]
-        if not raw_path.exists():
-            missing.append(source["url"])
-            continue
-        payload = json.loads(raw_path.read_text(encoding="utf-8"))
-        write_text_pdf(
-            output,
-            title=payload.get("title") or source["title"],
-            text=payload["text"],
-            source_url=payload.get("url") or source["url"],
-        )
-        print(f"Saved: {output}")
+    print(f"Found {len(files)} legal document(s) in {DATA_DIR}:")
+    for path in files:
+        print(f"  - {path.name} ({path.stat().st_size / 1024:.0f} KB)")
+        if not path.name.isascii():
+            print("    WARNING: tên file có dấu, hãy đổi thành tên không dấu")
+        if path.stat().st_size <= MIN_FILE_SIZE:
+            print("    WARNING: file quá nhỏ, có thể bị lỗi khi tải")
 
-    if missing:
-        raise FileNotFoundError(
-            "Thiếu file raw cho: " + "; ".join(missing)
+    if len(files) < MIN_DOCUMENTS:
+        raise RuntimeError(
+            f"Cần ít nhất {MIN_DOCUMENTS} tài liệu PDF/DOCX, hiện có {len(files)}"
         )
 
 

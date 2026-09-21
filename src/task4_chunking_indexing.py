@@ -11,15 +11,11 @@ Mỗi document/chunk phải theo docs/MODULE_CONTRACTS.md. ID cần ổn định
 chạy lại pipeline không tạo dữ liệu trùng. Task 5 phải dùng chung embed_texts().
 """
 
-from __future__ import annotations
-
 import os
 import re
 from pathlib import Path
 
 from dotenv import load_dotenv
-
-from src.contracts import validate_document
 
 
 load_dotenv()
@@ -27,119 +23,123 @@ load_dotenv()
 STANDARDIZED_DIR = Path(__file__).parent.parent / "data" / "standardized"
 CHROMA_DIR = Path(__file__).parent.parent / "chroma_db"
 
+# Giải thích lựa chọn tham số trong báo cáo nhóm.
+# - 500 ký tự (~120-150 token tiếng Việt): đủ cho một khoản/điểm của văn bản
+#   pháp luật, giữ retrieval chính xác và context gửi LLM gọn.
+# - overlap 50 (10%): tránh cắt mất ý ở ranh giới chunk.
+# - recursive: ưu tiên tách theo đoạn, dòng, câu rồi mới tới từ.
 CHUNK_SIZE = 500
 CHUNK_OVERLAP = 50
 CHUNKING_METHOD = "recursive"
-EMBED_BATCH_SIZE = 32
 
-EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "paraphrase-multilingual-MiniLM-L12-v2")
-EMBEDDING_DIM = 384
-EMBEDDING_PROVIDER = os.getenv("EMBEDDING_PROVIDER", "sentence_transformers")
+# Nhóm dùng OpenAI làm provider embedding mặc định (text-embedding-3-small, 1536 chiều).
+# Đổi provider hoặc model thì phải xóa chroma_db/ và index lại.
+DEFAULT_MODELS = {
+    "openai": "text-embedding-3-small",
+    "gemini": "gemini-embedding-001",
+    "sentence_transformers": "BAAI/bge-m3",
+}
+EMBEDDING_PROVIDER = os.getenv("EMBEDDING_PROVIDER") or "openai"
+EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL") or DEFAULT_MODELS.get(
+    EMBEDDING_PROVIDER, ""
+)
+EMBEDDING_DIM = 1536  # dimension của text-embedding-3-small.
 
 COLLECTION_NAME = "rag_documents"
 
-_sentence_model = None
-_hash_vectorizer = None
-_hash_fallback_warned = False
-HASH_EMBEDDING_DIM = 384
+EMBED_BATCH_SIZE = 32
+INDEX_BATCH_SIZE = 500
+
+_local_model = None
 
 
-def _title_from_markdown(content: str, fallback: str) -> str:
-    for line in content.splitlines():
-        stripped = line.strip()
-        if stripped.startswith("# "):
-            title = stripped[2:].strip()
-            if title:
-                return title
-    return fallback
-
-
-def _url_from_markdown(content: str) -> str | None:
-    match = re.search(r"https?://[^\s)>\]]+", content[:4000])
-    return match.group(0).rstrip(".,;") if match else None
-
-
-def _local_st_model_exists(name: str) -> bool:
-    cache = Path.home() / ".cache" / "huggingface" / "hub"
-    slug = "models--" + name.replace("/", "--")
-    return (cache / slug).exists()
-
-
-def _sentence_transformer():
-    global _sentence_model
-    if _sentence_model is None:
+def _embed_sentence_transformers(texts: list[str]) -> list[list[float]]:
+    global _local_model
+    if _local_model is None:
         from sentence_transformers import SentenceTransformer
 
-        _sentence_model = SentenceTransformer(EMBEDDING_MODEL, local_files_only=True)
-    return _sentence_model
+        _local_model = SentenceTransformer(EMBEDDING_MODEL)
+    vectors = _local_model.encode(
+        texts, batch_size=EMBED_BATCH_SIZE, normalize_embeddings=True
+    )
+    return vectors.tolist()
 
 
-def _hash_embeddings(texts: list[str]) -> list[list[float]]:
-    global _hash_vectorizer
-    if _hash_vectorizer is None:
-        from sklearn.feature_extraction.text import HashingVectorizer
+def _embed_openai(texts: list[str]) -> list[list[float]]:
+    from openai import OpenAI
 
-        _hash_vectorizer = HashingVectorizer(
-            n_features=HASH_EMBEDDING_DIM,
-            alternate_sign=False,
-            norm="l2",
-            ngram_range=(1, 2),
-        )
-    return _hash_vectorizer.transform(texts).toarray().tolist()
+    response = OpenAI(max_retries=5).embeddings.create(model=EMBEDDING_MODEL, input=texts)
+    return [item.embedding for item in response.data]
+
+
+def _embed_gemini(texts: list[str]) -> list[list[float]]:
+    from google import genai
+
+    client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
+    response = client.models.embed_content(model=EMBEDDING_MODEL, contents=texts)
+    return [item.values for item in response.embeddings]
+
+
+def _embed_hashing(texts: list[str]) -> list[list[float]]:
+    """Fallback local khi thiếu API key / không tải được model."""
+    from sklearn.feature_extraction.text import HashingVectorizer
+
+    vectorizer = HashingVectorizer(
+        n_features=384,
+        alternate_sign=False,
+        norm="l2",
+        analyzer="word",
+        ngram_range=(1, 2),
+    )
+    return vectorizer.transform(texts).toarray().tolist()
+
+
+_EMBEDDERS = {
+    "sentence_transformers": _embed_sentence_transformers,
+    "openai": _embed_openai,
+    "gemini": _embed_gemini,
+    "hashing": _embed_hashing,
+}
+
+
+def _resolved_embedder_name() -> str:
+    provider = EMBEDDING_PROVIDER
+    if provider == "openai" and not os.getenv("OPENAI_API_KEY", "").strip():
+        return "hashing"
+    if provider == "gemini" and not os.getenv("GEMINI_API_KEY", "").strip():
+        return "hashing"
+    return provider
 
 
 def embed_texts(texts: list[str]) -> list[list[float]]:
-    """Embed texts bằng đúng một provider; Task 5 phải gọi hàm này."""
+    """Embed danh sách text bằng provider trong EMBEDDING_PROVIDER."""
     if not texts:
         return []
+    provider = _resolved_embedder_name()
+    try:
+        embedder = _EMBEDDERS[provider]
+    except KeyError:
+        raise ValueError(
+            f"EMBEDDING_PROVIDER={EMBEDDING_PROVIDER!r} không hợp lệ; "
+            f"chọn một trong {sorted(_EMBEDDERS)}"
+        ) from None
+    return embedder(texts)
 
-    provider = EMBEDDING_PROVIDER.lower().strip()
-    if provider in {"sentence_transformers", "local", "huggingface"}:
-        if _local_st_model_exists(EMBEDDING_MODEL):
-            model = _sentence_transformer()
-            vectors: list[list[float]] = []
-            for start in range(0, len(texts), EMBED_BATCH_SIZE):
-                batch = texts[start : start + EMBED_BATCH_SIZE]
-                encoded = model.encode(
-                    batch,
-                    normalize_embeddings=True,
-                    show_progress_bar=len(texts) > EMBED_BATCH_SIZE,
-                )
-                vectors.extend(encoded.tolist())
-            return vectors
-        global _hash_fallback_warned
-        if not _hash_fallback_warned:
-            print(
-                f"Embedding model {EMBEDDING_MODEL} is not cached locally; "
-                "using hashing embeddings so indexing can finish offline."
-            )
-            _hash_fallback_warned = True
-        return _hash_embeddings(texts)
 
-    if provider == "openai":
-        from openai import OpenAI
+def reset_collection():
+    """Xóa collection cũ để tránh lệch chiều embedding khi đổi provider."""
+    import chromadb
 
-        client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-        model_name = EMBEDDING_MODEL or "text-embedding-3-small"
-        vectors = []
-        for start in range(0, len(texts), 100):
-            batch = texts[start : start + 100]
-            response = client.embeddings.create(model=model_name, input=batch)
-            vectors.extend(item.embedding for item in response.data)
-        return vectors
-
-    if provider == "gemini":
-        from google import genai
-
-        client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
-        model_name = EMBEDDING_MODEL or "gemini-embedding-001"
-        vectors = []
-        for text in texts:
-            response = client.models.embed_content(model=model_name, contents=text)
-            vectors.append(list(response.embeddings[0].values))
-        return vectors
-
-    raise ValueError(f"Unsupported EMBEDDING_PROVIDER: {provider}")
+    CHROMA_DIR.mkdir(parents=True, exist_ok=True)
+    client = chromadb.PersistentClient(path=str(CHROMA_DIR))
+    try:
+        client.delete_collection(COLLECTION_NAME)
+    except Exception:
+        pass
+    return client.get_or_create_collection(
+        name=COLLECTION_NAME,
+        metadata={"hnsw:space": "cosine"},
+    )
 
 
 def get_collection():
@@ -154,139 +154,83 @@ def get_collection():
     )
 
 
+def _news_header(text: str) -> tuple[str | None, str | None]:
+    """Lấy title và URL từ header Markdown do Task 3 tạo cho bài viết."""
+    title = re.search(r"^#\s+(.+)$", text, flags=re.MULTILINE)
+    url = re.search(r"^\*\*Source:\*\*\s*(\S+)", text, flags=re.MULTILINE)
+    return (
+        title.group(1).strip() if title else None,
+        url.group(1).strip() if url else None,
+    )
+
+
 def load_documents() -> list[dict]:
     """Đọc Markdown và trả về danh sách Document."""
     documents = []
     for path in sorted(STANDARDIZED_DIR.rglob("*.md")):
-        if path.name.startswith("."):
-            continue
         content = path.read_text(encoding="utf-8").strip()
         if not content:
             continue
-        doc_type = "legal" if "legal" in path.parts else "news"
-        relative_id = path.relative_to(STANDARDIZED_DIR).as_posix()
-        document = {
-            "id": relative_id,
+        doc_type = "legal" if "legal" in path.relative_to(STANDARDIZED_DIR).parts else "news"
+        title, url = _news_header(content) if doc_type == "news" else (None, None)
+        documents.append({
+            "id": path.relative_to(STANDARDIZED_DIR).as_posix(),
             "content": content,
             "metadata": {
                 "source": path.name,
-                "title": _title_from_markdown(content, path.stem),
+                "title": title or path.stem,
                 "doc_type": doc_type,
-                "url": _url_from_markdown(content),
+                "url": url,
             },
-        }
-        validate_document(document)
-        documents.append(document)
+        })
     return documents
-
-
-def _split_with_separators(
-    text: str,
-    separators: list[str],
-    chunk_size: int,
-    chunk_overlap: int,
-) -> list[str]:
-    if not text:
-        return []
-    if len(text) <= chunk_size:
-        return [text]
-
-    separator = separators[0] if separators else ""
-    rest = separators[1:] if separators else []
-    if separator == "":
-        step = max(chunk_size - chunk_overlap, 1)
-        return [text[start : start + chunk_size] for start in range(0, len(text), step)]
-
-    merged: list[str] = []
-    current = ""
-    for piece in text.split(separator):
-        candidate = piece if not current else f"{current}{separator}{piece}"
-        if len(candidate) <= chunk_size:
-            current = candidate
-            continue
-        if current:
-            merged.append(current)
-        if len(piece) > chunk_size:
-            merged.extend(_split_with_separators(piece, rest, chunk_size, chunk_overlap))
-            current = ""
-        else:
-            current = piece
-    if current:
-        merged.append(current)
-
-    if chunk_overlap <= 0 or len(merged) <= 1:
-        return merged
-
-    overlapped = [merged[0]]
-    for chunk in merged[1:]:
-        prev = overlapped[-1]
-        prefix = prev[-chunk_overlap:]
-        if chunk.startswith(prefix):
-            overlapped.append(chunk)
-            continue
-        candidate = prefix + chunk
-        overlapped.append(chunk if len(candidate) > int(chunk_size * 1.1) else candidate)
-    return overlapped
 
 
 def chunk_documents(documents: list[dict]) -> list[dict]:
     """Chia Document thành chunks có id và chunk_index."""
+    from langchain_text_splitters import RecursiveCharacterTextSplitter
+
+    splitter = RecursiveCharacterTextSplitter(
+        chunk_size=CHUNK_SIZE,
+        chunk_overlap=CHUNK_OVERLAP,
+        separators=["\n\n", "\n", ". ", " ", ""],
+    )
     chunks = []
     for document in documents:
-        pieces = [
-            text.strip()
-            for text in _split_with_separators(
-                document["content"],
-                ["\n\n", "\n", ". ", " ", ""],
-                CHUNK_SIZE,
-                CHUNK_OVERLAP,
-            )
-            if text.strip()
-        ]
-        for index, text in enumerate(pieces):
-            chunk = {
+        texts = [t for t in splitter.split_text(document["content"]) if t.strip()]
+        for index, text in enumerate(texts):
+            chunks.append({
                 "id": f"{document['id']}::chunk-{index}",
                 "content": text,
                 "metadata": {**document["metadata"], "chunk_index": index},
-            }
-            validate_document(chunk, require_chunk=True)
-            chunks.append(chunk)
+            })
     return chunks
 
 
 def embed_chunks(chunks: list[dict]) -> list[dict]:
     """Thêm embedding vào từng chunk."""
-    vectors = embed_texts([chunk["content"] for chunk in chunks])
-    embedded = []
-    for chunk, vector in zip(chunks, vectors):
-        item = dict(chunk)
-        item["embedding"] = vector
-        embedded.append(item)
-    return embedded
+    for start in range(0, len(chunks), EMBED_BATCH_SIZE):
+        batch = chunks[start:start + EMBED_BATCH_SIZE]
+        vectors = embed_texts([chunk["content"] for chunk in batch])
+        for chunk, vector in zip(batch, vectors):
+            chunk["embedding"] = vector
+    return chunks
 
 
-def _chroma_metadata(metadata: dict) -> dict:
-    url = metadata.get("url")
-    return {
-        "source": str(metadata["source"]),
-        "title": str(metadata["title"]),
-        "doc_type": str(metadata["doc_type"]),
-        "url": url if isinstance(url, str) and url.strip() else "",
-        "chunk_index": int(metadata["chunk_index"]),
-    }
-
-
-def index_to_vectorstore(chunks: list[dict]) -> None:
+def index_to_vectorstore(chunks: list[dict], *, reset: bool = False) -> None:
     """Upsert chunks vào ChromaDB."""
-    collection = get_collection()
-    batch_size = 200
-    for start in range(0, len(chunks), batch_size):
-        batch = chunks[start : start + batch_size]
+    collection = reset_collection() if reset else get_collection()
+    for start in range(0, len(chunks), INDEX_BATCH_SIZE):
+        batch = chunks[start:start + INDEX_BATCH_SIZE]
         collection.upsert(
             ids=[chunk["id"] for chunk in batch],
             documents=[chunk["content"] for chunk in batch],
             embeddings=[chunk["embedding"] for chunk in batch],
-            metadatas=[_chroma_metadata(chunk["metadata"]) for chunk in batch],
+            # Chroma không nhận giá trị None; url thiếu sẽ được Task 5 điền lại.
+            metadatas=[
+                {k: v for k, v in chunk["metadata"].items() if v is not None}
+                for chunk in batch
+            ],
         )
 
 
@@ -294,9 +238,11 @@ def run_pipeline() -> None:
     """Chạy load, chunk, embed và index."""
     documents = load_documents()
     chunks = chunk_documents(documents)
+    print(f"Loaded {len(documents)} documents -> {len(chunks)} chunks")
     embedded_chunks = embed_chunks(chunks)
-    index_to_vectorstore(embedded_chunks)
-    print(f"Indexed {len(embedded_chunks)} chunks from {len(documents)} documents")
+    dim = len(embedded_chunks[0]["embedding"]) if embedded_chunks else 0
+    index_to_vectorstore(embedded_chunks, reset=True)
+    print(f"Indexed {len(embedded_chunks)} chunks | dim={dim} | provider={_resolved_embedder_name()}")
 
 
 if __name__ == "__main__":

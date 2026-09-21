@@ -73,5 +73,20 @@
     "question": "Mục tiêu GRDP của TP.Hồ Chí Minh giai đoạn 2026-2030 theo dự thảo Chương trình hành động triển khai Nghị quyết Trung ương 3 là gì?",
     "expected_answer": "Giai đoạn 2026-2030, Thành phố đặt mục tiêu tăng trưởng GRDP tối thiểu 11%/năm; GRDP bình quân đầu người từ 14.500 đô la Mỹ; kinh tế số chiếm khoảng 40% GRDP; hoàn thành khoảng 255 km đường sắt đô thị.",
     "expected_context": "Theo dự thảo, TP.Hồ Chí Minh đặt mục tiêu giai đoạn 2026 - 2030 đạt tốc độ tăng trưởng GRDP tối thiểu 11%/năm; GRDP bình quân đầu người từ 14.500 đô la Mỹ; kinh tế số chiếm khoảng 40% GRDP; hoàn thành khoảng 255 km đường sắt đô thị; cơ bản giải quyết tình trạng ngập úng, ô nhiễm môi trường, ùn tắc giao thông và không còn ma túy."
+  },
+  {
+    "question": "Hộ kinh doanh có doanh thu năm từ 500 triệu đồng trở xuống có phải chịu thuế GTGT theo Nghị định 68/2026/NĐ-CP không?",
+    "expected_answer": "Hộ kinh doanh, cá nhân kinh doanh có mức doanh thu năm từ 500 triệu đồng trở xuống thuộc đối tượng không chịu thuế giá trị gia tăng.",
+    "expected_context": "Hộ kinh doanh, cá nhân kinh doanh có hoạt động sản xuất, kinh doanh có mức doanh thu năm từ 500 triệu đồng trở xuống thuộc đối tượng không chịu thuế giá trị gia tăng."
+  },
+  {
+    "question": "Nghị định 68/2026/NĐ-CP có hiệu lực thi hành khi nào?",
+    "expected_answer": "Nghị định có hiệu lực thi hành kể từ ngày ký ban hành, tức ngày 05 tháng 3 năm 2026.",
+    "expected_context": "Nghị định này có hiệu lực thi hành kể từ ngày ký ban hành."
+  },
+  {
+    "question": "Thông tư 91/2026/TT-BTC có hiệu lực thi hành từ ngày nào?",
+    "expected_answer": "Thông tư có hiệu lực thi hành kể từ ngày 01 tháng 7 năm 2026.",
+    "expected_context": "Thông tư này có hiệu lực thi hành kể từ ngày 01 tháng 7 năm 2026."
   }
 ]

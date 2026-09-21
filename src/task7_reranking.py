@@ -24,12 +24,12 @@ def rerank_rrf(
                 items[item_id] = {
                     "id": item["id"],
                     "content": item["content"],
-                    "metadata": dict(item["metadata"]),
+                    "metadata": dict(item.get("metadata") or {}),
                     "score": item["score"],
                     "retrieval_method": item.get("retrieval_method", "dense"),
                 }
 
-    ranked_ids = sorted(scores, key=lambda item_id: scores[item_id], reverse=True)
+    ranked_ids = sorted(scores, key=scores.get, reverse=True)
     results = []
     for item_id in ranked_ids[: max(top_k, 0)]:
         result = dict(items[item_id])

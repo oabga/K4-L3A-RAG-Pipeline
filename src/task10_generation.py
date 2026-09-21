@@ -30,11 +30,36 @@ TEMPERATURE = 0.3
 LLM_PROVIDER = os.getenv("LLM_PROVIDER", "openai")
 LLM_MODEL = os.getenv("LLM_MODEL", "")
 
-SYSTEM_PROMPT = """Trả lời chỉ từ context được cung cấp.
-Mỗi khẳng định phải có citation dạng [Source: <filename>] khớp trường Source trong context.
-Nếu thiếu evidence, hãy từ chối xác minh. Không bịa thông tin."""
+SYSTEM_PROMPT = """Bạn là trợ lý hỏi đáp pháp luật của hệ thống RAG.
+
+Nguyên tắc bắt buộc:
+- Chỉ được dùng các đoạn đã retrieval trong phần Context. Đó là toàn bộ bằng chứng.
+- Không dùng kiến thức bên ngoài, không suy diễn, không bổ sung điều khoản không có trong Context.
+- Nếu Context không đủ hoặc không liên quan, trả lời đúng câu: "Tôi không thể xác minh thông tin này từ nguồn hiện có."
+- Mỗi khẳng định phải có citation [Source: <filename>] khớp trường Source của đoạn đã retrieve.
+- Không bịa số hiệu văn bản, ngày ban hành, hiệu lực, mức tiền hoặc tên điều.
+- Trả lời tiếng Việt, ngắn gọn, có cấu trúc. Không chào hỏi lan man."""
 
 SAFE_REFUSAL = "Tôi không thể xác minh thông tin này từ nguồn hiện có."
+GREETING_REPLY = (
+    "Xin chào. Tôi chỉ trả lời câu hỏi dựa trên corpus pháp luật đã thu thập. "
+    "Hãy hỏi về nghị định, thông tư, luật hoặc bài viết trong hệ thống."
+)
+
+_CHITCHAT_PHRASES = {
+    "xin chào",
+    "chào",
+    "chào bạn",
+    "hello",
+    "hi",
+    "hey",
+    "alo",
+    "cảm ơn",
+    "thanks",
+    "thank you",
+    "ok",
+    "okay",
+}
 
 _STOPWORDS = {
     "của", "và", "là", "các", "cho", "với", "trong", "được", "một", "này",
@@ -74,13 +99,14 @@ def format_context(chunks: list[dict]) -> str:
         metadata = chunk["metadata"]
         parts.append(
             f"[Document {index} | Title: {metadata['title']} | "
-            f"Source: {metadata['source']}]\n{chunk['content']}"
+            f"Source: {metadata['source']} | Method: {chunk.get('retrieval_method', '')}]\n"
+            f"{chunk['content']}"
         )
     return "\n\n---\n\n".join(parts)
 
 
 def _provider_api_key() -> str:
-    provider = (LLM_PROVIDER or "openai").lower().strip()
+    provider = (os.getenv("LLM_PROVIDER") or LLM_PROVIDER or "openai").lower().strip()
     env_name = _PROVIDER_KEYS.get(provider)
     if not env_name:
         raise ValueError(f"Unsupported LLM_PROVIDER: {provider}")
@@ -92,14 +118,15 @@ def _provider_api_key() -> str:
 
 def call_llm(system_prompt: str, user_message: str) -> str:
     """Gọi OpenAI, Gemini hoặc Anthropic theo cấu hình."""
-    provider = (LLM_PROVIDER or "openai").lower().strip()
+    provider = (os.getenv("LLM_PROVIDER") or LLM_PROVIDER or "openai").lower().strip()
     api_key = _provider_api_key()
+    model_name = (os.getenv("LLM_MODEL") or LLM_MODEL or "").strip()
 
     if provider == "openai":
         from openai import OpenAI
 
         client = OpenAI(api_key=api_key)
-        model = LLM_MODEL or "gpt-4o-mini"
+        model = model_name or "gpt-4o-mini"
         response = client.chat.completions.create(
             model=model,
             temperature=TEMPERATURE,
@@ -115,7 +142,7 @@ def call_llm(system_prompt: str, user_message: str) -> str:
         from google import genai
 
         client = genai.Client(api_key=api_key)
-        model = LLM_MODEL or "gemini-2.0-flash"
+        model = model_name or "gemini-2.0-flash"
         response = client.models.generate_content(
             model=model,
             contents=f"{system_prompt}\n\n{user_message}",
@@ -126,7 +153,7 @@ def call_llm(system_prompt: str, user_message: str) -> str:
         import anthropic
 
         client = anthropic.Anthropic(api_key=api_key)
-        model = LLM_MODEL or "claude-sonnet-4-5"
+        model = model_name or "claude-sonnet-4-5"
         response = client.messages.create(
             model=model,
             max_tokens=1024,
@@ -158,13 +185,44 @@ def _tokens(text: str) -> set[str]:
     }
 
 
+def _is_chitchat(query: str) -> bool:
+    normalized = re.sub(r"\s+", " ", query.lower()).strip(" ?!.。,")
+    if normalized in _CHITCHAT_PHRASES:
+        return True
+    tokens = _tokens(query)
+    return len(tokens) <= 2 and tokens <= {"xin", "chào", "hello", "hi", "hey", "alo", "bạn"}
+
+
+def llm_is_configured() -> bool:
+    provider = (os.getenv("LLM_PROVIDER") or LLM_PROVIDER or "openai").lower().strip()
+    env_name = _PROVIDER_KEYS.get(provider)
+    return bool(env_name and (os.getenv(env_name) or "").strip())
+
+
+_LEGAL_HINTS = {
+    "nghị", "định", "luật", "thông", "tư", "điều", "khoản", "thuế",
+    "đấu", "thầu", "hộ", "doanh", "gtgt", "tncn", "vắc", "tiêm",
+    "hóa", "đơn", "chủng", "công", "nghệ",
+}
+
+
+def _looks_like_legal_query(query: str, tokens: set[str]) -> bool:
+    if re.search(r"\d{2,}", query):
+        return True
+    return bool(tokens & _LEGAL_HINTS)
+
+
 def _has_sufficient_evidence(query: str, chunks: list[dict]) -> bool:
+    if _is_chitchat(query):
+        return False
     query_tokens = _tokens(query)
     if not query_tokens or not chunks:
         return False
     blob = " ".join(chunk["content"] for chunk in chunks[:3]).lower()
     hits = sum(1 for token in query_tokens if token in blob)
     ratio = hits / len(query_tokens)
+    if len(query_tokens) <= 2 and not _looks_like_legal_query(query, query_tokens):
+        return False
     if chunks[0].get("retrieval_method") == "pageindex":
         return ratio >= 0.55
     return ratio >= 0.35
@@ -186,6 +244,10 @@ def _extractive_answer(query: str, chunks: list[dict]) -> str:
     """Trích câu có overlap với query và gắn citation theo Source."""
     query_tokens = _tokens(query)
     query_numbers = set(re.findall(r"\d{3,}", query))
+    distinctive_numbers = {
+        number for number in query_numbers
+        if not (len(number) == 4 and number.startswith("20"))
+    }
     query_lower = query.lower()
     scored: list[tuple[int, str]] = []
     for chunk in chunks:
@@ -203,12 +265,17 @@ def _extractive_answer(query: str, chunks: list[dict]) -> str:
             bonus = overlap * 2
             source_lower = source.lower()
             title_lower = str(chunk["metadata"].get("title") or "").lower()
-            if query_numbers and any(number in source_lower or number in title_lower for number in query_numbers):
+            numbers = distinctive_numbers or query_numbers
+            if numbers and any(
+                number in source_lower or number in title_lower for number in numbers
+            ):
                 bonus += 10
-            if query_numbers and any(number in text for number in query_numbers):
+            if numbers and any(number in text for number in numbers):
                 bonus += 6
             if "hiệu lực" in query_lower and "kể từ" in lower:
                 bonus += 8
+            if "hiệu lực" in query_lower and "hết hiệu lực" in lower:
+                bonus -= 8
             if "hiệu lực" in query_lower and "tiếp tục thực hiện" in lower:
                 bonus -= 4
             if len(text) > 420:
@@ -228,38 +295,67 @@ def _extractive_answer(query: str, chunks: list[dict]) -> str:
 
     if unique:
         return "\n\n".join(unique)
-
-    chunk = chunks[0]
-    excerpt = " ".join(chunk["content"].split())[:500].strip()
-    return f"{excerpt} [Source: {chunk['metadata']['source']}]"
+    return SAFE_REFUSAL
 
 
 def generate_with_citation(query: str, top_k: int = TOP_K) -> dict:
     """Trả về GenerationResult."""
+    if _is_chitchat(query):
+        return {
+            "answer": GREETING_REPLY,
+            "sources": [],
+            "retrieval_source": "none",
+            "used_llm": False,
+        }
+
     chunks = retrieve(query, top_k=top_k)
     if not chunks or not _has_sufficient_evidence(query, chunks):
         return {
             "answer": SAFE_REFUSAL,
             "sources": [],
             "retrieval_source": "none",
+            "used_llm": False,
         }
 
     reordered = reorder_for_llm(chunks)
     context = format_context(reordered)
     user_message = (
-        f"Context:\n{context}\n\nQuestion: {query}\n\n"
-        "Cite using [Source: <filename>] matching the Source field."
+        "Dưới đây là TOÀN BỘ đoạn đã được retrieval. "
+        "Chỉ trả lời dựa trên các đoạn này, không dùng kiến thức khác.\n\n"
+        f"Context:\n{context}\n\n"
+        f"Câu hỏi: {query}\n\n"
+        "Nếu context không đủ, hãy từ chối xác minh. "
+        "Citation phải là [Source: <filename>] khớp trường Source."
     )
-    try:
-        answer = call_llm(SYSTEM_PROMPT, user_message)
-    except Exception:
+    used_llm = False
+    if llm_is_configured():
+        try:
+            answer = call_llm(SYSTEM_PROMPT, user_message)
+            used_llm = True
+        except Exception as error:
+            return {
+                "answer": (
+                    f"Không gọi được LLM ({type(error).__name__}: {error}). "
+                    "Kiểm tra API key, provider và model trong file `.env` rồi restart app."
+                ),
+                "sources": chunks,
+                "retrieval_source": _retrieval_source(chunks),
+                "used_llm": False,
+            }
+    else:
         answer = _extractive_answer(query, reordered)
-    if not answer.strip():
-        answer = SAFE_REFUSAL
+    if not answer.strip() or answer.strip() == SAFE_REFUSAL:
+        return {
+            "answer": SAFE_REFUSAL,
+            "sources": [],
+            "retrieval_source": "none",
+            "used_llm": used_llm,
+        }
     return {
         "answer": answer,
         "sources": chunks,
         "retrieval_source": _retrieval_source(chunks),
+        "used_llm": used_llm,
     }
 
 

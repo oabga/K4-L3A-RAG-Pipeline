@@ -43,7 +43,9 @@ def _load_cache() -> dict[str, str]:
 
 
 def _save_cache(mapping: dict[str, str]) -> None:
-    CACHE_PATH.write_text(json.dumps(mapping, ensure_ascii=False, indent=2), encoding="utf-8")
+    CACHE_PATH.write_text(
+        json.dumps(mapping, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
 
 
 def _call_with_timeout(func, *args, timeout: int = API_TIMEOUT_SECONDS, **kwargs):
@@ -69,7 +71,7 @@ def upload_documents() -> None:
             continue
         try:
             response = _call_with_timeout(client.submit_document, str(path))
-            doc_id = response.get("doc_id")
+            doc_id = response.get("doc_id") if isinstance(response, dict) else None
             if doc_id:
                 cache[path.name] = str(doc_id)
                 print(f"Uploaded {path.name} -> {doc_id}")
@@ -80,7 +82,11 @@ def upload_documents() -> None:
 
 def _local_vectorless_search(query: str, top_k: int) -> list[dict]:
     """Tìm theo mục/điều trên Markdown khi không gọi được PageIndex API."""
-    tokens = [token for token in re.findall(r"[0-9A-Za-zÀ-ỹ/%.-]+", query.lower()) if len(token) > 1]
+    tokens = [
+        token
+        for token in re.findall(r"[0-9A-Za-zÀ-ỹ/%.-]+", query.lower())
+        if len(token) > 1
+    ]
     if not tokens:
         return []
 
@@ -102,7 +108,10 @@ def _local_vectorless_search(query: str, top_k: int) -> list[dict]:
                 (
                     score,
                     {
-                        "id": f"pageindex::{path.relative_to(STANDARDIZED_DIR).as_posix()}::section-{index}",
+                        "id": (
+                            f"pageindex::{path.relative_to(STANDARDIZED_DIR).as_posix()}"
+                            f"::section-{index}"
+                        ),
                         "content": text[:1200],
                         "score": float(score),
                         "metadata": {
@@ -119,7 +128,7 @@ def _local_vectorless_search(query: str, top_k: int) -> list[dict]:
 
     scored.sort(key=lambda item: item[0], reverse=True)
     results = []
-    seen = set()
+    seen: set[str] = set()
     for _, item in scored:
         if item["id"] in seen:
             continue
@@ -143,13 +152,15 @@ def _remote_pageindex_search(query: str, top_k: int) -> list[dict]:
     for source, doc_id in cache.items():
         try:
             submitted = _call_with_timeout(client.submit_query, doc_id, query)
-            retrieval_id = submitted.get("retrieval_id")
+            retrieval_id = submitted.get("retrieval_id") if isinstance(submitted, dict) else None
             if not retrieval_id:
                 continue
             payload = _call_with_timeout(client.get_retrieval, retrieval_id)
         except (Exception, FuturesTimeout):
             continue
 
+        if not isinstance(payload, dict):
+            continue
         nodes = payload.get("nodes") or payload.get("results") or payload.get("retrieved_nodes") or []
         if isinstance(payload.get("content"), str) and not nodes:
             nodes = [{"content": payload["content"], "score": 1.0}]
@@ -160,7 +171,7 @@ def _remote_pageindex_search(query: str, top_k: int) -> list[dict]:
             if not content:
                 continue
             score = node.get("score")
-            if not isinstance(score, (int, float)):
+            if not isinstance(score, (int, float)) or isinstance(score, bool):
                 score = max(0.0, 1.0 - index / max(top_k, 1))
             results.append(
                 {

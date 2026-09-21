@@ -24,8 +24,7 @@ from .task8_pageindex_vectorless import pageindex_search
 load_dotenv()
 
 DEFAULT_TOP_K = 5
-# Calibrated 2026-09-20 on this corpus + hashing embeddings:
-# in-domain dense top-1 min=0.367 mean=0.460; out-of-domain max=0.301 mean=0.253.
+# Calibrate bằng query in-domain (văn bản pháp luật) và out-of-domain (nấu ăn, thời tiết).
 SCORE_THRESHOLD = float(os.getenv("SCORE_THRESHOLD") or 0.33)
 
 
@@ -58,7 +57,7 @@ def retrieve(
 if __name__ == "__main__":
     samples = [
         ("in", "Nghị định 349/2026/NĐ-CP có hiệu lực khi nào?"),
-        ("in", "Gói thầu không quá 100 triệu đồng được xử lý thế nào?"),
+        ("in", "Hộ kinh doanh doanh thu 500 triệu đồng có chịu thuế GTGT không?"),
         ("out", "Cách nấu phở bò Hà Nội ngon?"),
         ("out", "Thời tiết Paris tuần này ra sao?"),
     ]

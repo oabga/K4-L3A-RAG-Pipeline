@@ -57,3 +57,6 @@ chroma_db/
 # OS
 .DS_Store
 Thumbs.db
+
+# Local vector store
+chroma_db/
